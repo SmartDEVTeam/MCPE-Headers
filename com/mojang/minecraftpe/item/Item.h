@@ -1,7 +1,9 @@
 #pragma once
 
-class Item
-{
+#include <string>
+
+class Item {
+public:
     virtual ~Item();
     virtual Item* setIcon(const std::string&, int);
     virtual Item* setIcon(const TextureUVCoordinateSet&);
