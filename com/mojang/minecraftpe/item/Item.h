@@ -1,9 +1,13 @@
 #pragma once
-
 #include <string>
+enum CreativeItemCategory;
+enum UseAnimation;
 
 class Item {
 public:
+
+    Item(std::string, short);
+
     virtual ~Item();
     virtual Item* setIcon(const std::string&, int);
     virtual Item* setIcon(const TextureUVCoordinateSet&);
@@ -43,7 +47,17 @@ public:
     virtual void hurtEnemy(ItemInstance*, Mob*, Mob*);
     virtual void interactEnemy(ItemInstance*, Mob*, Player*);
     virtual void mineBlock(ItemInstance*, BlockID, int, int, int, Mob*);
-    virtual const std::string buildDescriptionName(const ItemInstance&) const;
-    virtual const std::string buildEffectDescriptionName(const ItemInstance&) const;
+    virtual const std::string& buildDescriptionName(const ItemInstance&) const;
+    virtual const std::string& buildEffectDescriptionName(const ItemInstance&) const;
     virtual void readUserData(ItemInstance*, IDataInput&) const;
+    virtual void writeUserData(const ItemInstance*, IDataOutput&, bool) const;
+    virtual int getMaxStackSize(const ItemInstance*);
+    virtual void inventoryTick(ItemInstance&, Level&, Entity&);
+    virtual void onCraftedBy(ItemInstance&, Level&, Player&);
+    virtual const std::string& getInteractText() const;
+    virtual int getAnimationFrameFor(Mob&) const;
+    virtual bool isEmissive(int) const;
+    virtual const TextureUVCoordinateSet& getIcon(int, int, bool) const;
+    virtual int getIconYOffset() const;
+    virtual bool isMirroredArt() const;
 };
