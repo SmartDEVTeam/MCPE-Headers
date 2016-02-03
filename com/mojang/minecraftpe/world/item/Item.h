@@ -10,9 +10,7 @@ class Mob;
 class Level;
 class BlockID;
 class Color;
-namespace RakNet {
-	class BitStream;
-};
+
 namespace Json {
 	class Value;
 };
