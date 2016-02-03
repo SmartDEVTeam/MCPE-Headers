@@ -1,10 +1,44 @@
 #pragma once
 #include <string>
-enum CreativeItemCategory;
-enum UseAnimation;
+class TextureUVCoordinateSet;
+class Block;
+class CreativeItemCategory;
+class UseAnimation;
+class ItemInstance;
+class Player;
+class Mob;
+class Level;
+class BlockID;
+class Color;
+namespace RakNet {
+	class BitStream;
+};
+namespace Json {
+	class Value;
+};
 
 class Item {
 public:
+	unsigned char maxStackSize; // 4
+	std::string atlas; // 8
+	int frameCount; // 12
+	short idk2; // 16
+	short itemId; // 18
+	std::string name; // 20
+	short maxDamage; // 24
+	short properties; // 26
+	int maxUseDuration; // 28
+	int useAnimation; // 32
+	int creativeCategory; // 36
+	int idk3; // 40
+	int idk4; // 44
+	TextureUVCoordinateSet& icon; // 48
+	int idk5; // 52
+	bool isFood; // 56
+	Item* craftingRemainingItem; // 60
+	bool isCamera; // 64
+
+	static Item* mItems[4096];
 
     Item(std::string, short);
 
@@ -37,7 +71,7 @@ public:
     virtual int getEnchantSlot() const;
     virtual int getEnchantValue() const;
     virtual bool isComplex() const;
-    virtual int getColor(const ItemInstance&) const;
+    virtual Color getColor(const ItemInstance&) const;
     virtual bool use(ItemInstance&, Player&);
     virtual bool useOn(ItemInstance*, Player*, int, int, int, signed char, float, float, float);
     virtual void dispense(BlockSource&, Container&, int, const Vec3&, signed char);
@@ -60,4 +94,15 @@ public:
     virtual const TextureUVCoordinateSet& getIcon(int, int, bool) const;
     virtual int getIconYOffset() const;
     virtual bool isMirroredArt() const;
+	
+	void init(Json::Value&);
+
+	static TextureUVCoordinateSet getTextureUVCoordinateSet(const std::string&, int);
+	static void initItems();
+	static void addBlockItems();
+	static void initCreativeItems();
+	static void addCreativeItem(Block*, short);
+	static void addCreativeItem(Item*, short);
+	static void addCreativeItem(const ItemInstance&);
+	static void addCreativeItem(short, short);
 };
