@@ -10,6 +10,12 @@ class Mob;
 class Level;
 class BlockID;
 class Color;
+class BlockSource;
+class Vec3;
+class Container;
+class IDataInput;
+class IDataOutput;
+class Entity;
 
 namespace Json {
 	class Value;

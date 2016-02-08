@@ -1,6 +1,6 @@
 #include "TextureUVCoordinateSet.h"
 
-TextureUVCoordinateSet::TextureUVCoordinateSet(float minU, float minV, float maxU, float maxV, int width, int height) {
+TextureUVCoordinateSet::TextureUVCoordinateSet(float minU, float minV, float maxU, float maxV, signed short width, signed short height) {
 	setUV(minU, minV, maxU, maxV);
 	this->width = width;
 	this->height = height;
