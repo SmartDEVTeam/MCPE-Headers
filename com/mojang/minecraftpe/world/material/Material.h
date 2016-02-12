@@ -38,7 +38,7 @@ public:
 	bool isSuperHot();
 	
 	void _setReplaceable();
-	void _setMapColor(const Color&)
+	void _setMapColor(const Color&);
 	
 	static void addMaterial(std::unique_ptr<Material>);
 	static void _setupSurfaceMaterials();

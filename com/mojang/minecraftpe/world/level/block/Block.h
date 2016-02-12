@@ -22,6 +22,7 @@ class Container;
 #include "../../phys/AABB.h"
 #include "../../../CommonTypes.h"
 #include "entity/BlockEntityType.h"
+#include "BlockShape.h"
 
 class Block {
 public:
@@ -52,7 +53,7 @@ public:
 	const Block::SoundType& soundType; // 44
 	bool canBuildOver; // 49
 	int renderLayer; // 52
-	int renderType; // 56
+	BlockShape blockShape; // 56
 	int properties; // 60
 	BlockEntityType blockEntityType; // 64
 	bool animates; // 68
@@ -104,7 +105,7 @@ public:
 	virtual void tick(BlockSource&, const BlockPos&, Random&);
 	virtual const AABB& getCollisionShape(AABB&, BlockSource&, const BlockPos&, Entity*);
 	virtual bool isObstructingChests(BlockSource&, const BlockPos&);
-	virtual void randomlyModifyPosition(const BlockPos&, int) const;
+	virtual void randomlyModifyPosition(const BlockPos&, int&) const;
 	virtual void randomlyModifyPosition(const BlockPos&) const;
 	virtual void getCarriedTexture(signed char, int);
 	virtual void addAABBs(BlockSource&, const BlockPos&, const AABB*, std::vector<AABB, std::allocator<AABB>>&);
@@ -125,7 +126,7 @@ public:
 	virtual void handleRain(BlockSource&, const BlockPos&, float) const;
 	virtual float getThickness() const;
 	virtual bool checkIsPathable(Entity&, const BlockPos&, const BlockPos&);
-	virtual void dispense(BlockSource&, Container&, int, const Vec3&, bool, int);
+	virtual void dispense(BlockSource&, Container&, int, const Vec3&, signed char);
 	virtual void onPlace(BlockSource&, const BlockPos&);
 	virtual void onRemove(BlockSource&, const BlockPos&);
 	virtual void onExploded(BlockSource&, const BlockPos&, Entity*);
@@ -180,8 +181,8 @@ public:
 	virtual void getTessellatedUVs();
 	virtual int getIconYOffset() const;
 	virtual std::string& buildDescriptionName(const ItemInstance&) const;
-	virtual int getColor(int);
-	virtual int getColor(BlockSource&, const BlockPos&);
+	virtual int getColor(int) const;
+	virtual int getColor(BlockSource&, const BlockPos&) const;
 	virtual bool isSeasonTinted(BlockSource&, const BlockPos&) const;
 	virtual void prepareRender(BlockSource&, const BlockPos&);
 	virtual void onGraphicsModeChanged(bool, bool);
