@@ -31,7 +31,7 @@ enum class BlockShape : int {
 	FLOWER_POT = 42,
 	ANVIL,
 	CROSS_POLY = 65,
-	DOUBLE_PLANT,
+	DOUBLE_PLANT2,
 	TOP_SNOW = 68,
 	TRIPWIRE,
 	TRIPWIRE_HOOK,

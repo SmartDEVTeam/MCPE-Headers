@@ -52,7 +52,6 @@ public:
 	bool canRender(BlockShape);
 	unsigned int getLightColor(const BlockPos&);
 	DataID getData(const BlockPos&) const;
-	unsigned int getLightColor(const BlockPos&);
 	BlockSource& getRegion() const;
 	void setRegion(BlockSource&);
 	int getRenderLayer() const;
@@ -60,4 +59,6 @@ public:
 	void setForceOpaque(bool);
 	void tex1(unsigned int);
 	void blend(int, int, int, int);
+	
+	void setRenderBounds(float, float, float, float, float, float);
 };

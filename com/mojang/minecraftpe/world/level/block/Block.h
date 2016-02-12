@@ -13,7 +13,6 @@ class Mob;
 class Random;
 struct Vec3;
 class Brightness;
-class CreativeItemCategory;
 class TextureAtlas;
 class Container;
 #include "../../../client/renderer/texture/TextureUVCoordinateSet.h"
@@ -23,6 +22,7 @@ class Container;
 #include "../../../CommonTypes.h"
 #include "entity/BlockEntityType.h"
 #include "BlockShape.h"
+#include "../../../CreativeItemCategory.h"
 
 class Block {
 public:
@@ -62,12 +62,12 @@ public:
 	bool instaTicks; // 77
 	float gravity; // 80
 	Material& material; // 84
-	Color color; // 88
+	Color mapColor; // 88
 	float friction; // 104
 	bool heavy; // 108
 	float hardness; // 112
 	float explosionResistance; // 116
-	int creativeCategory; // 120
+	CreativeItemCategory creativeCategory; // 120
 	AABB hitbox; // 124
 
 
@@ -183,6 +183,7 @@ public:
 	virtual std::string& buildDescriptionName(const ItemInstance&) const;
 	virtual int getColor(int) const;
 	virtual int getColor(BlockSource&, const BlockPos&) const;
+	virtual int getColorForParticle(BlockSource&, const BlockPos&, int) const;
 	virtual bool isSeasonTinted(BlockSource&, const BlockPos&) const;
 	virtual void prepareRender(BlockSource&, const BlockPos&);
 	virtual void onGraphicsModeChanged(bool, bool);

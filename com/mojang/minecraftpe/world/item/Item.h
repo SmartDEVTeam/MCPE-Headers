@@ -1,8 +1,10 @@
 #pragma once
 #include <string>
+
+#include "../../CreativeItemCategory.h"
+
 class TextureUVCoordinateSet;
 class Block;
-class CreativeItemCategory;
 class UseAnimation;
 class ItemInstance;
 class Player;
