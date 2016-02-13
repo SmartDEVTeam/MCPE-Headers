@@ -57,7 +57,7 @@ public:
 	virtual void setMaxDamage(int);
 	virtual void setHandEquipped();
 	virtual void setUseAnimation(UseAnimation);
-	virtual void setMaxDuration(int);
+	virtual void setMaxUseDuration(int);
 	virtual bool canBeDepleted();
 	virtual bool canDestroySpecial(const Block*) const;
 	virtual int getLevelDataForAuxValue(int) const;
