@@ -16,6 +16,8 @@ class EntityEvent;
 class ItemInstance;
 class ChangeDimensionPacket;
 class ExplodeComponent;
+class Dimension;
+class Random;
 #include "../material/Material.h"
 #include "EntityType.h"
 #include "EntityRendererId.h"
@@ -86,8 +88,8 @@ public:
 	char filler7[8]; // 320
 	bool what7; // 328
 	bool isStuckInWeb; // 329
-	bool isInWater; // 330
-	bool isImmobile; // 331
+	bool inWater; // 330
+	bool immobile; // 331
 	bool changed; // 332
 	ExplodeComponent* exploder; // 336
 	int idk4; // 340

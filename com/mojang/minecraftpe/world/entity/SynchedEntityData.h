@@ -4,7 +4,7 @@ enum class DataItemType : int {
 	STRING = 4,
 	ITEMINSTANCE,
 	
-}
+};
 
 
 struct SynchedEntityData {
