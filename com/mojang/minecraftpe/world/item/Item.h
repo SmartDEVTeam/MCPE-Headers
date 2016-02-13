@@ -46,7 +46,7 @@ public:
 
 	static Item* mItems[4096];
 
-	Item(std::string, short);
+	Item(const std::string&, short);
 
 	virtual ~Item();
 	virtual Item* setIcon(const std::string&, int);
