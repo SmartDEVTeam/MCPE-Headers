@@ -92,7 +92,7 @@ public:
 	virtual void readUserData(ItemInstance*, IDataInput&) const;
 	virtual void writeUserData(const ItemInstance*, IDataOutput&, bool) const;
 	virtual int getMaxStackSize(const ItemInstance*);
-	virtual void inventoryTick(ItemInstance&, Level&, Entity&);
+	virtual void inventoryTick(ItemInstance&, Level&, Entity&, int, bool);
 	virtual void onCraftedBy(ItemInstance&, Level&, Player&);
 	virtual const std::string& getInteractText() const;
 	virtual int getAnimationFrameFor(Mob&) const;
