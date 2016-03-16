@@ -37,7 +37,9 @@ public:
 		SoundType(const std::string&, float, float);
 		SoundType(const std::string&, const std::string&, float, float);
 		SoundType(const std::string&, const std::string&, const std::string&, float, float);
-
+		
+		~SoundType();
+		
 		float getVolume() const;
 		float getPitch() const;
 		std::string getStepSound() const;
@@ -51,6 +53,7 @@ public:
 	std::string name; // 12
 	TextureUVCoordinateSet texture; // 16
 	const Block::SoundType& soundType; // 44
+	bool replaceable;
 	bool canBuildOver; // 49
 	int renderLayer; // 52
 	BlockShape blockShape; // 56
@@ -76,7 +79,7 @@ public:
 	static Block* mBlocks[256];
 	static bool mSolid[256];
 	static float mTranslucency[256];
-	static uint_fast8_t mLightBlock[256];
+	static uint8_t mLightBlock[256];
 	static int mLightEmission[256];
 	static bool mShouldTick[256];
 
@@ -101,16 +104,17 @@ public:
 	Block(const std::string&, int, TextureUVCoordinateSet, const Material&);
 	Block(const std::string&, int, const std::string&, const Material&);
 
+	/* vtable */
 	virtual ~Block();
 	virtual void tick(BlockSource&, const BlockPos&, Random&);
 	virtual const AABB& getCollisionShape(AABB&, BlockSource&, const BlockPos&, Entity*);
 	virtual bool isObstructingChests(BlockSource&, const BlockPos&);
 	virtual void randomlyModifyPosition(const BlockPos&, int&) const;
 	virtual void randomlyModifyPosition(const BlockPos&) const;
-	virtual void getCarriedTexture(signed char, int);
-	virtual void addAABBs(BlockSource&, const BlockPos&, const AABB*, std::vector<AABB, std::allocator<AABB>>&);
-	virtual AABB* getAABB(BlockSource&, const BlockPos&, AABB&, int, bool, int);
-	virtual bool addCollisionShapes(BlockSource&, const BlockPos&, const AABB*, std::vector<AABB, std::allocator<AABB>>&, Entity*);
+	virtual const TextureUVCoordinateSet& getCarriedTexture(signed char, int);
+	virtual bool addAABBs(BlockSource&, const BlockPos&, const AABB*, std::vector<AABB>&);
+	virtual const AABB& getAABB(BlockSource&, const BlockPos&, AABB&, int, bool, int);
+	virtual bool addCollisionShapes(BlockSource&, const BlockPos&, const AABB*, std::vector<AABB>&, Entity*);
 	virtual bool isCropBlock() const;
 	virtual bool isContainerBlock() const;
 	virtual bool isCraftingBlock() const;
@@ -121,7 +125,7 @@ public:
 	virtual bool isRedstoneBlock() const;
 	virtual bool isRedstoneAttachable() const;
 	virtual bool isSignalSource() const;
-	virtual void getDirectSignal(BlockSource&, const BlockPos&, int);
+	virtual int getDirectSignal(BlockSource&, const BlockPos&, int);
 	virtual bool waterSpreadCausesSpawn() const;
 	virtual void handleRain(BlockSource&, const BlockPos&, float) const;
 	virtual float getThickness() const;
@@ -142,6 +146,7 @@ public:
 	virtual bool mayPick(BlockSource&, int, bool);
 	virtual bool mayPlace(BlockSource&, const BlockPos&, signed char);
 	virtual bool mayPlace(BlockSource&, const BlockPos&);
+	virtual bool mayPlaceOn(const Block&);
 	virtual void tryToPlace(BlockSource&, const BlockPos&, unsigned char);
 	virtual void destroy(BlockSource&, const BlockPos&, int, Entity*);
 	virtual void playerWillDestroy(Player&, const BlockPos&, int);
@@ -149,7 +154,7 @@ public:
 	virtual void getSecondPart(BlockSource&, const BlockPos&, BlockPos&);
 	virtual int getResource(Random&, int, int);
 	virtual int getResourceCount(Random&, int, int);
-	virtual const ItemInstance& asItemInstance(BlockSource&, const BlockPos&, int) const;
+	virtual ItemInstance& asItemInstance(BlockSource&, const BlockPos&, int) const;
 	virtual float getDestroyProgress(Player&);
 	virtual void spawnResources(BlockSource&, const BlockPos&, int, float, int);
 	virtual void spawnBurnResources(BlockSource&, float, float, float);
@@ -167,8 +172,8 @@ public:
 	virtual void triggerEvent(BlockSource&, const BlockPos&, int, int);
 	virtual TextureUVCoordinateSet getTextureNum(int);
 	virtual void getMobToSpawn(BlockSource&, const BlockPos&) const;
-	virtual const Color& getMapColor(const FullBlock&) const;
-	virtual const Color& getMapColor() const;
+	virtual Color getMapColor(const FullBlock&) const;
+	virtual Color getMapColor() const;
 	virtual bool shouldStopFalling(Entity&);
 	virtual float calcGroundFriction(Mob&, const BlockPos&) const;
 	virtual bool canHaveExtraData() const;
@@ -180,7 +185,7 @@ public:
 	virtual const TextureUVCoordinateSet& getTexture(BlockSource&, const BlockPos&, signed char);
 	virtual void getTessellatedUVs();
 	virtual int getIconYOffset() const;
-	virtual std::string& buildDescriptionName(const ItemInstance&) const;
+	virtual std::string buildDescriptionName(const ItemInstance&) const;
 	virtual int getColor(int) const;
 	virtual int getColor(BlockSource&, const BlockPos&) const;
 	virtual int getColorForParticle(BlockSource&, const BlockPos&, int) const;
@@ -191,8 +196,8 @@ public:
 	virtual int getExtraRenderLayers();
 	virtual const AABB& getVisualShape(BlockSource&, const BlockPos&, AABB&, bool);
 	virtual const AABB& getVisualShape(unsigned char, AABB&, bool);
-	virtual void animateTick(BlockSource&, const BlockPos&, Random&);
-	virtual const std::string& getDebugText(std::vector<std::string, std::allocator<std::string>>&);
+	virtual bool animateTick(BlockSource&, const BlockPos&, Random&);
+	virtual std::string getDebugText(std::vector<std::string>&);
 	virtual Block* init();
 	virtual bool canBeSilkTouched() const;
 	virtual ItemInstance& getSilkTouchItemInstance(unsigned char);
@@ -211,12 +216,14 @@ public:
 	const std::string& getDescriptionId() const;
 	void addAABB(const AABB&, const AABB*, std::vector<AABB, std::allocator<AABB>>&);
 	void popResource(BlockSource&, const BlockPos&, const ItemInstance&);
-	TextureUVCoordinateSet getTextureUVCoordinateSet(const std::string&, int);
-	TextureAtlasTextureItem getTextureItem(const std::string&);
 	Block* setCategory(CreativeItemCategory);
 	void setSolid(bool);
 	bool isSolid() const;
+	
+	static TextureAtlasTextureItem getTextureItem(const std::string&);
+	static TextureUVCoordinateSet getTextureUVCoordinateSet(const std::string&, int);
 	static void initBlocks();
+	static void teardownBlocks();
 
 	static Block* mAir; // 0
 	static Block* mStone; // 1
