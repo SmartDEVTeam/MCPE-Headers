@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Item.h"
+#include "ItemInstance.h"
 
 enum class ArmorSlot : int {
 	HELMET,
@@ -52,7 +53,7 @@ public:
 	virtual bool isValidRepairItem(const ItemInstance&, const ItemInstance&); 
 	virtual int getEnchantSlot() const; 
 	virtual int getEnchantValue() const;
-    virtual Color getColor(const ItemInstance&) const;
+    virtual int getColor(const ItemInstance&) const;
     virtual void dispense(BlockSource&, Container&, int, const Vec3&, signed char);
 	ItemInstance getTierItem();
 };

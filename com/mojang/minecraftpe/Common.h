@@ -2,7 +2,7 @@
 #include <string>
 
 class Common {
-	public:
+public:
 	std::string getGameVersionString();
 	std::string getGameDevVersionString();
 };

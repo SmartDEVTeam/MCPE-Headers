@@ -1,22 +1,22 @@
-#pragma once
-#include <vector>
-#include <string>
-#include "mcpe/world/item/ItemInstance.h"
-
+#pragma once 
+#include <vector> 
+#include <string> 
+#include "com/mojang/minecraftpe/world/item/ItemInstance.h"
 class Item;
 class Block;
 
 class Recipes {
 public:
-    struct Type {
-        Item* item;
-        Block* block;
-        ItemInstance inst;
-        char letter;
-    };
+	struct Type {
+		Item* item;
+		Block* block;
+		ItemInstance inst;
+		char letter;
+	};
 
-    static Recipes* getInstance();
-    
-    void init();
-    void addShapedRecipe(const ItemInstance&, const std::vector<std::string>&, const std::vector<Recipes::Type>&);
+	static Recipes* getInstance();
+	static Recipes* instance;
+
+	void init();
+	void addShapedRecipe(const ItemInstance&, const std::vector<std::string>&, const std::vector <Recipes::Type>&);
 };
