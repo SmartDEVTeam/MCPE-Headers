@@ -14,7 +14,6 @@ class MobEffect;
 class EntityUniqueID;
 class Attribute;
 class ItemEntity;
-class ArmorSlot;
 #include "../item/ItemInstance.h"
 
 // Size : 3178

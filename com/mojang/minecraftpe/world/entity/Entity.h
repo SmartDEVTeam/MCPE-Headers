@@ -9,7 +9,7 @@ class Player;
 class EntityPos;
 struct BlockPos;
 class CompoundTag;
-class ArmorSlot;
+enum class ArmorSlot;
 class EntityLink;
 class EntityDamageSource;
 class EntityEvent;
@@ -18,6 +18,7 @@ class ChangeDimensionPacket;
 class ExplodeComponent;
 class Dimension;
 class Random;
+class Entity;
 #include "../material/Material.h"
 #include "EntityType.h"
 #include "EntityRendererId.h"

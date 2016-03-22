@@ -1,6 +1,6 @@
 #pragma once
-class CompoundTag;
 class Item;
+class CompoundTag;
 class Block;
 class Mob;
 

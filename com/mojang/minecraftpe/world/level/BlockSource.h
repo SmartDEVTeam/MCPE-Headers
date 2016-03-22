@@ -1,9 +1,9 @@
 #pragma once
 class Block;
 struct BlockPos;
+class Material;
 class BlockEntity;
 class Level;
-class Material;
 #include "../../CommonTypes.h"
 
 class BlockSource {

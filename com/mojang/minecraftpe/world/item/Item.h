@@ -3,12 +3,13 @@
 #include <string>
 #include <memory>
 
+#include "../../CreativeItemCategory.h"
+
 class TextureUVCoordinateSet;
 struct SeedItemComponent;
 class FoodItemComponent;
 class CameraItemComponent;
 class Block;
-class CreativeItemCategory;
 class ItemInstance;
 class Entity;
 class Mob;

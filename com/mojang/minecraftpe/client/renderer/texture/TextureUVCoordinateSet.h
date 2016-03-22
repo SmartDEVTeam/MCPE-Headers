@@ -7,7 +7,7 @@ class TextureUVCoordinateSet {
 	float maxV;
 	unsigned short width;
 	unsigned short height;
-	int file;
+	int index, file;
 
 public:
 	TextureUVCoordinateSet();

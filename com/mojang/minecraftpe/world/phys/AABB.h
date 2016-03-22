@@ -2,9 +2,9 @@
 #include "Vec3.h"
 
 struct AABB {
+	bool empty;
 	Vec3 min;
 	Vec3 max;
-	bool empty;
 
 	AABB();
 	AABB(const Vec3&, const Vec3&);
