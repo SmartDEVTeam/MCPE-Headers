@@ -40,7 +40,7 @@ public:
 	short properties; // 26
 	int useDuration; // 28
 	int useAnimation; // 32
-	int creativeCategory; // 36
+	CreativeItemCategory creativeCategory; // 36
 	int idk3; // 40
 	int hoverTextColor; // 44
 	TextureUVCoordinateSet& icon; // 48
