@@ -18,4 +18,6 @@ public:
 	bool setExtraData(const BlockPos&, unsigned short);
 	void removeBlock(const BlockPos&);
 	BlockEntity* getBlockEntity(const BlockPos&);
+	int getTopSolidBlock(const BlockPos&, bool);
+	int getTopSolidBlock(int, int, bool);
 };

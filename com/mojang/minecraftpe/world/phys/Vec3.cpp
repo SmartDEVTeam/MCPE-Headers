@@ -1,26 +1,63 @@
 #include "Vec3.h"
-#include <cmath>
 
-Vec3::Vec3(float _x, float _y, float _z) {
-	x = _x, y = _y, z = _z;
+//thanks @mackthehobbit! :)
+
+float Vec3::lengthSquared() const {
+	return x * x + y * y + z * z;
 }
 
-Vec3& Vec3::extend(float _x, float _y, float _z) {
-	x += _x, y += _y, z += _z;
-	return *this;
+float Vec3::length() const {
+	return sqrtf(lengthSquared());
 }
 
-Vec3& Vec3::extend(const Vec3& other) {
-	x += other.x, y += other.y, z += other.z;
-	return *this;
+void Vec3::normalize() {
+	*this /= length();
 }
 
-Vec3& Vec3::set(float _x, float _y, float _z) {
-	x = _x, y = _y, z = _z;
-	return *this;
+void Vec3::setLength(float newLength) {
+	*this /= (length() / newLength);
 }
 
-Vec3& Vec3::normalize() {
-	double root = std::sqrt(x * x + y * y + z * z);
-	return root < 0.0001? set(0.0F, 0.0F, 0.0F) : set(x / root, y / root, z / root);
+Vec3 Vec3::operator+(Vec3 const& other) const {
+	return Vec3(x + other.x, y + other.y, z + other.z);
+}
+
+void Vec3::operator+=(Vec3 const& other) {
+	x += other.x;
+	y += other.y;
+	z += other.z;
+}
+
+Vec3 Vec3::operator-(Vec3 const& other) const {
+	return Vec3(x - other.x, y - other.y, z - other.z);
+}
+
+void Vec3::operator-=(Vec3 const& other) {
+	x -= other.x;
+	y -= other.y;
+	z -= other.z;
+}
+
+Vec3 Vec3::operator*(float factor) const {
+	return Vec3(x * factor, y * factor, z * factor);
+}
+
+void Vec3::operator*=(float factor) {
+	x *= factor;
+	y *= factor;
+	z *= factor;
+}
+
+Vec3 Vec3::operator/(float factor) const {
+	return Vec3(x / factor, y / factor, z / factor);
+}
+
+void Vec3::operator/=(float factor) {
+	x /= factor;
+	y /= factor;
+	z /= factor;
+}
+
+Vec3 Vec3::operator-() const {
+	return Vec3(-x, -y, -z);
 }
