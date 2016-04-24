@@ -2,7 +2,7 @@
 
 class AppPlatformListener {
 public:
-	char apl_vars[8];
+	char apl_vars[4];
 
 	AppPlatformListener(bool);
 	AppPlatformListener();

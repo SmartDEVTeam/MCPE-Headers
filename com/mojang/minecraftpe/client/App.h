@@ -4,6 +4,7 @@
 #include "AppPlatformListener.h"
 
 class AppContext;
+class Token;
 
 // Size : 28
 class App : public AppPlatformListener {

@@ -9,4 +9,5 @@ public:
 
 	void drop(const ItemInstance*);
 	ItemInstance* getSelectedItem() const;
+	bool IsCreative() const;
 };

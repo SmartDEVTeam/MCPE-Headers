@@ -1,15 +1,12 @@
 #pragma once
 
-//#include "shared.h"
+#include <string>
 
-class Options
-{
+class Options {
 public:
-	class Option
-	{
+	class Option {
 	public:
-		enum Type
-		{
+		enum Type {
 			TYPE_TOGGLE,
 			TYPE_PROGRESS,
 			TYPE_TEXT,
@@ -34,6 +31,8 @@ public:
 	void _load();
 
 	std::string getUsername() const;
+	
+	bool getFancyGraphics() const;
 
 	static void _readBool(std::string const &, bool &);
 	static void _readFloat(std::string const &, float &);

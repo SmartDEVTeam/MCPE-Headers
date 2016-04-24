@@ -6,8 +6,9 @@
 #include "BaseScreen.h"
 
 namespace Touch { class TButton; };
-namespace Controller { class StickDirection; };
 
+
+class StickDirection;
 class MinecraftClient;
 class Button;
 class TextBox;
@@ -24,20 +25,17 @@ public:
 	int height; // 16
 	MinecraftClient* mcClient; // 20
 	std::vector<std::shared_ptr<Button>> buttonList; // 24
-	char screen_vars1[8]; // 28
 	std::vector<std::shared_ptr<TextBox>> textboxList; // 36
-	char screen_vars2[8]; // 40
-	std::vector<std::shared_ptr<Button>> buttonList2; // 48
-	char screen_vars3[8]; // 52
-	std::vector<std::shared_ptr<GuiElement>> elementList; // 60
-	char screen_vars4[8]; // 64
-	std::vector<std::shared_ptr<GuiElement>> elementList2; // 72
-	char screen_vars5[16]; // 76	
-	ControllerButtonRenderer* buttonRenderer; // 92
+	std::vector<std::shared_ptr<Button>> tabButtonList; // 48
+	std::vector<std::shared_ptr<GuiElement>> tabElementList; // 60
+	std::vector<std::shared_ptr<GuiElement>> guiElementList; // 72
+	int tabButtonIndex; // 84
+	int tabElementIndex; // 88
+	std::unique_ptr<ControllerButtonRenderer> buttonRenderer; // 92
 	Font* font; // 96
-	char screen_vars6[36]; // 100
+	Button* buttonClicked; // 100
+	char screen_vars6[32]; // 104
 
-public:
 	Screen(MinecraftClient&);
 	virtual ~Screen();
 	virtual void _init(int, int);

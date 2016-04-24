@@ -2,7 +2,7 @@
 
 #include <string>
 #include "GuiComponent.h"
-#include "../../util/Color.h"
+#include "../../world/util/Color.h"
 
 class StickDirection;
 class MinecraftClient;

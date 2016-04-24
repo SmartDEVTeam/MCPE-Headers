@@ -1,7 +1,6 @@
 #pragma once
 
-#include "../MemoryTracker.h"
-
+class MemoryTracker;
 class Color;
 class Vec2;
 class Vec3;
@@ -11,10 +10,7 @@ namespace mce {
 	class TexturePtr;
 }
 
-class Tessellator : public MemoryTracker {
-public:
-	static Tessellator instance;
-
+class Tessellator {
 public:
 	Tessellator(MemoryTracker *);
 	virtual ~Tessellator();
@@ -65,4 +61,6 @@ public:
 	void vertexUV(const Vec3 &, float, float);
 	void vertexUV(float, float, float, float, float);
 	void voidBeginAndEndCalls(bool);
+	
+	static Tessellator instance;
 };
