@@ -4,6 +4,8 @@
 #include <memory>
 
 #include "../../CreativeItemCategory.h"
+#include "../../CommonTypes.h"
+#include "../../UseAnimation.h"
 
 class TextureUVCoordinateSet;
 struct SeedItemComponent;
@@ -18,8 +20,6 @@ class Player;
 class Container;
 class BlockSource;
 struct Vec3;
-class UseAnimation;
-class BlockID;
 struct IDataInput;
 struct IDataOutput;
 namespace Json { class Value; };
@@ -39,7 +39,8 @@ public:
 	short maxDamage; // 24
 	short properties; // 26
 	int useDuration; // 28
-	int useAnimation; // 32
+	BlockID blockId; // 32
+	UseAnimation useAnimation; // 33
 	CreativeItemCategory creativeCategory; // 36
 	int idk3; // 40
 	int hoverTextColor; // 44
@@ -47,7 +48,6 @@ public:
 	int idk5; // 52
 	std::unique_ptr<FoodItemComponent> _foodDetails; // 56
 	std::unique_ptr<SeedItemComponent> _seedDetails; // 60
-	std::unique_ptr<CameraItemComponent> _cameraDetails; // 64
 
 	/* list */
 	static Item* mItems[4096];
