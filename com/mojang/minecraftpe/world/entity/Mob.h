@@ -124,8 +124,8 @@ public:
 	virtual void setLastHurtByMob(Mob*);
 	virtual Player* getLastHurtByPlayer();
 	virtual void setLastHurtByPlayer(Player*);
-	virtual Entity* getLastHurt();
-	virtual void setLasthurt(Entity*);
+	virtual Entity* getLastHurtMob();
+	virtual void setLasthurtMob(Entity*);
 	virtual Mob* getTarget();
 	virtual void setTarget(Mob*);
 	virtual bool canAttack(Mob*, bool);
@@ -164,7 +164,7 @@ public:
 	virtual std::string _getDeathSound();
 	virtual void getDamageAfterArmorAbsorb(const EntityDamageSource&, int);
 	virtual void getExperienceReward() const;
-	virtual bool useNewAI();
+	virtual bool useNewAi();
 	virtual void onEffectAdded(MobEffectInstance&);
 	virtual void onEffectUpdated(const MobEffectInstance&);
 	virtual void onEffectRemoved(MobEffectInstance&);
