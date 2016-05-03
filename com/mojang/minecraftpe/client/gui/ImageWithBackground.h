@@ -15,5 +15,5 @@ public:
 	virtual void renderBg(MinecraftClient*, int, int);
 	
 	void setSize(float, float);
-	void init(TextureGroup*, int, int, IntRectangle, IntRectangle, int, int, const std::string&);
+	void init(mce::TextureGroup*, int, int, IntRectangle, IntRectangle, int, int, const std::string&);
 };

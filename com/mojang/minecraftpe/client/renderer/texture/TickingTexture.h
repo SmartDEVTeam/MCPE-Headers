@@ -1,6 +1,6 @@
 #pragma once
 #include "TextureUVCoordinateSet.h"
-class TextureGroup;
+namespace mce { class TextureGroup; };
 
 class TickingTexture {
 protected:

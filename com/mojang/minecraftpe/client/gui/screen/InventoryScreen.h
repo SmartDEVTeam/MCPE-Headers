@@ -10,7 +10,6 @@
 
 class Tessellator;
 class ItemPack;
-class ItemInstance;
 class Recipe;
 class ArmorSlot;
 class ImageButton;
@@ -50,10 +49,7 @@ public:
 	std::shared_ptr<Touch::InventoryPane> inventory; // 332
 	std::shared_ptr<Touch::InventoryPane> armor; // 340
 	std::shared_ptr<Touch::InventoryPane> crafting; // 348
-	std::shared_ptr<Touch::InventoryPane> creative1; // 356
-	std::shared_ptr<Touch::InventoryPane> creative2; // 364
-	std::shared_ptr<Touch::InventoryPane> creative3; // 372
-	std::shared_ptr<Touch::InventoryPane> creative4; // 380
+	std::shared_ptr<Touch::InventoryPane> creativePanes[4]; // 356
 	std::shared_ptr<BlankButton> blankButton; // 388
 	std::shared_ptr<BlankButton> blankButton2; // 396
 	std::shared_ptr<BlankButton> blankButton3; // 404
@@ -86,6 +82,7 @@ public:
 	virtual bool renderGameBehind() const;
 	virtual bool closeOnPlayerHurt() const;
 	virtual bool isModal() const;
+	virtual std::string getScreenName();
 	virtual void render(int, int, float);
 	virtual void init();
 	virtual void setupPositions();

@@ -5,9 +5,9 @@
 class IntRectangle;
 class Color;
 class Font;
-class TextureGroup;
 
 namespace mce {
+	class TextureGroup;
 	class TexturePtr;
 	class MaterialPtr;
 };
@@ -36,6 +36,6 @@ public:
 	void fillHorizontalGradient(int, int, int, int, const Color&, const Color&);
 	void fillStencil(float, float, float, float);
 	void getMaterial(ScreenRenderer::ScreenMaterial);
-	void reloadResources(TextureGroup&);
+	void reloadResources(mce::TextureGroup&);
 	ScreenRenderer* singleton();
 };

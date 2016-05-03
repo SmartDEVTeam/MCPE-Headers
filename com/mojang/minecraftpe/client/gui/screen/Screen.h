@@ -16,6 +16,7 @@ class GuiElement;
 class MCOEvent;
 class MojangConnectionStatus;
 class ControllerButtonRenderer;
+class ItemInstance;
 
 // Size : 160
 class Screen : public BaseScreen, public GuiComponent {
@@ -48,8 +49,9 @@ public:
 	virtual void terminate();
 	virtual void tick(int, int);
 	virtual void updateEvents();
-	virtual void setupAndRender(UIRenderContext&, unsigned short, int, int, float);
+	virtual void render(ScreenContext&);
 	virtual void handleInputModeChanged(InputMode);
+	virtual void handleHoloInputModeChanged(HoloUIInputMode);
 	virtual void handleButtonPress(short);
 	virtual void handleButtonRelease(short);
 	virtual void handlePointerLocation(short, short);
@@ -67,6 +69,7 @@ public:
 	virtual bool closeOnPlayerHurt() const;
 	virtual int getWidth();
 	virtual int getHeight();
+	virtual std::string getScreenName();
 	virtual void toGUICoordinate(int, int, int&, int&);
 	virtual void render(int, int, float);
 	virtual void init();
@@ -92,8 +95,12 @@ public:
 	virtual void _controllerDirectionHeld(int, StickDirection);
 	int _getCursorMoveThrottle();
 	void _processControllerDirection(int);
+	void _renderSlot(int, int, int, float);
 	void _tabNext();
 	void _tabPrev();
+	void renderOnSelectItemNameText(int, Font*, int);
 	void renderProgressBar(float);
+	void renderSlotText(const ItemInstance*, float, float, bool, bool, bool, bool);
+	void renderToolBar(float, float, bool);
 	void setButtonIndex(int);
 };

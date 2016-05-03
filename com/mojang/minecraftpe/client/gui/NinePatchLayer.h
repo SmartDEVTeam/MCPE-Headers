@@ -7,7 +7,7 @@
 class Tessellator;
 class TextureData;
 class IntRectangle;
-class TextureGroup;
+namespace mce { class TextureGroup; };
 
 class NinePatchDescription {
 public:
@@ -25,7 +25,7 @@ public:
 
 	class CachedQuad;
 
-	NinePatchLayer(const NinePatchDescription&, const std::string&, TextureGroup *, float, float);
+	NinePatchLayer(const NinePatchDescription&, const std::string&, mce::TextureGroup*, float, float);
 	virtual ~NinePatchLayer();
 
 	void draw(Tessellator&, float, float);
@@ -39,11 +39,11 @@ public:
 
 class NinePatchFactory {
 public:
-	TextureGroup* textures;
+	mce::TextureGroup* textures;
 	std::string imageName;
 	int width;
 	int height;
 	
-	NinePatchFactory(TextureGroup*, const std::string&);
+	NinePatchFactory(mce::TextureGroup*, const std::string&);
 	NinePatchLayer* createSymmetrical(IntRectangle const&, int, int, float, float);
 };

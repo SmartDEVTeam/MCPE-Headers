@@ -3,11 +3,13 @@
 #include <string>
 
 class BlockPos;
-class UIRenderContext;
+class ScreenContext;
+class UIScreenContext;
 class InputMode;
+class HoloUIInputMode;
 class DirectionId;
 class VoiceCommand;
-namespace UI { class GameEventNotification; };
+namespace ui { class GameEventNotification; };
 
 class AbstractScreen {
 public:
@@ -20,12 +22,15 @@ public:
 	virtual void onFocusGained() = 0;
 	virtual void onFocusLost() = 0;
 	virtual void terminate() = 0;
-	virtual void onGameEventNotification(UI::GameEventNotification);
+	virtual void onGameEventNotification(ui::GameEventNotification);
+	virtual void _handleDirtyVisualTree();
 	virtual void tick(int, int) = 0;
 	virtual void updateEvents() = 0;
 	virtual void applyInput(float);
-	virtual void setupAndRender(UIRenderContext&, unsigned short, int, int, float) = 0;
+	virtual void render(ScreenContext&) = 0;
+	virtual void setupAndRender(UIScreenContext&);
 	virtual void handleInputModeChanged(InputMode) = 0;
+	virtual void handleHoloInputModeChanged(HoloUIInputMode) = 0;
 	virtual void handleButtonPress(short) = 0;
 	virtual void handleButtonRelease(short) = 0;
 	virtual void handlePointerLocation(short, short) = 0;
@@ -44,11 +49,17 @@ public:
 	virtual bool isModal() const;
 	virtual bool isShowingMenu() const;
 	virtual bool shouldStealMouse() const;
+	virtual bool screenIsNotFlushable() const;
+	virtual bool screenDrawsLast() const;
 	virtual void getFocusedControl();
 	virtual bool isWorldViewer() const;
 	virtual bool isPauseScreen() const;
 	virtual bool renderOnlyWhenTopMost() const;
+	virtual bool ignoreAsTop() const;
 	virtual int getWidth() = 0;
 	virtual int getHeight() = 0;
 	virtual int getNumberOfRenderPasses() const;
+	virtual void getEyeRenderingMode() const;
+	virtual std::string getScreenName();
+	virtual void getSendTelemetry();
 };

@@ -13,7 +13,7 @@ class PlayerRenderer : public HumanoidMobRenderer {
 public:
 	GeometryGroup& geometry; // 204
 
-	PlayerRenderer(TextureGroup&, GeometryGroup&, std::unique_ptr<PlayerModel>, float);
+	PlayerRenderer(mce::TextureGroup&, GeometryGroup&, std::unique_ptr<PlayerModel>, float);
 	virtual ~PlayerRenderer();
 	virtual void render(Entity&, const Vec3&, float, float);
 	virtual void prepareCarriedItem(Model&, Mob&, ItemInstance*);

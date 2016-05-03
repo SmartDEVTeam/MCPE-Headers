@@ -11,7 +11,7 @@
 class AbstractScreen;
 class Font;
 class GameRenderer;
-class Gui;
+class GuiData;
 class Screen;
 class ScreenChooser;
 class Minecraft;
@@ -33,7 +33,6 @@ class LocalPlayer;
 class LevelSettings;
 class SoundEngine;
 class TextureAtlas;
-class TextureGroup;
 class GameStore;
 class GeometryGroup;
 class SkinRepository;
@@ -49,6 +48,7 @@ class MusicManager;
 class LevelArchiver;
 class SnoopClient;
 class Entity;
+namespace mce { class TextureGroup; };
 namespace UI { class GameEventNotification; };
 namespace Social { 
 	class UserManager; 
@@ -79,7 +79,7 @@ public:
 	HolosceneRenderer* holoRenderer; // 100
 	ParticleEngine* particleEngine; // 104
 	ExternalServerFile* serverFile; // 108
-	TextureGroup* textureGroup; // 112 
+	mce::TextureGroup* textureGroup; // 112 
 	Font* defualtFont; // 116
 	Font* runeFont; // 120
 	Entity* targetEntity; // 124
@@ -97,7 +97,7 @@ public:
 	MinecraftInputHandler* mcInputHandler; // 268
 	std::unique_ptr<HolographicPlatform> holoInput; // 272
 	void* voidSystem; // 276
-	Gui* gui; // 280
+	GuiData* gui; // 280
 	UIDefRepository* UIRepo; // 284
 	Options* options; // 288
 	SoundEngine* soundEngine; // 292
@@ -179,7 +179,7 @@ public:
 	Font* getFont() const;
 	GameRenderer* getGameRenderer() const;
 	GameStore* getGameStore() const;
-	Gui* getGui() const;
+	GuiData* getGuiData() const;
 	int getHeight() const;
 	void getHoloInput() const;
 	void getHolosceneRenderer() const;
@@ -202,7 +202,7 @@ public:
 	void getSkinRepository();
 	void getSoundEngine() const;
 	void getTelemetry() const;
-	TextureGroup* getTextures() const;
+	mce::TextureGroup* getTextures() const;
 	void getUIDefRep() const;
 	void getVoiceSystem() const;
 	void getUserManager() const;

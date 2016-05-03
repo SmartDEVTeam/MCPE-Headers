@@ -5,11 +5,11 @@
 #include "../TexturePtr.h"
 
 class EntityRenderDispatcher;
-class TextureGroup;
 class Vec3;
 class Vec2;
 class Font;
 class Options;
+namespace mce { class TextureGroup; };
 
 class EntityRenderer : public EntityShaderManager {
 public:
