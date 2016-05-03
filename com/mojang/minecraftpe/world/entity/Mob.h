@@ -152,7 +152,7 @@ public:
 	virtual void getDamageAfterMagicAbsorb(const EntityDamageSource&, int);
 	virtual bool _removeWhenFarAway();
 	virtual int getDeathLoot();
-	virtual void gropDeathLoot(int);
+	virtual void dropDeathLoot(int);
 	virtual void dropRareDeathLoot();
 	virtual void jumpFromGround();
 	virtual void _pickUpItem(ItemEntity&);
