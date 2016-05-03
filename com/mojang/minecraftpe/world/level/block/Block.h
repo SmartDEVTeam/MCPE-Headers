@@ -191,7 +191,7 @@ public:
 	virtual int getColorForParticle(BlockSource&, const BlockPos&, int) const;
 	virtual bool isSeasonTinted(BlockSource&, const BlockPos&) const;
 	virtual void prepareRender(BlockSource&, const BlockPos&);
-	virtual void onGraphicsModeChanged(bool, bool);
+	virtual void onGraphicsModeChanged(bool, bool, bool);
 	virtual int getRenderLayer(BlockSource&, const BlockPos&) const;
 	virtual int getExtraRenderLayers();
 	virtual const AABB& getVisualShape(BlockSource&, const BlockPos&, AABB&, bool);
