@@ -19,6 +19,7 @@ class ExplodeComponent;
 class Dimension;
 class Random;
 class Entity;
+class EntityLocation;
 #include "../material/Material.h"
 #include "EntityType.h"
 #include "EntityRendererId.h"
