@@ -12,6 +12,7 @@ class Player : public Mob {
 public:
 	char filler2[2971];
 	bool creativeMode;
+	bool surivivalMode;
 
 	/* vtable */
 	virtual ~Player();
@@ -48,7 +49,7 @@ public:
 	virtual int getItemUseDuration();
 	virtual void dropAllGear(int);
 	virtual void drop(const ItemInstance*, bool);
-	virtual void sendInventory() cosnt;
+	virtual void sendInventory() const;
 	virtual void dropDeathLoot(int);
 	virtual void dropRareDeathLoot();
 	virtual void jumpFromGround();
@@ -87,7 +88,7 @@ public:
 	virtual void openHopper(int, const EntityUniqueID&);
 	virtual void openDispenser(int, const BlockPos&);
 	virtual void openPortfolio();
-	virtual void displayChatMessage(const std::string&, conts std::string&);
+	virtual void displayChatMessage(const std::string&, const std::string&);
 	virtual void displayClientMessage(const std::string&);
 	virtual void displayLocalizableMessage(const std::string&, const std::vector<std::string, std::allocator<std::string>>&);
 	virtual void startSleepInBed(const BlockPos&);

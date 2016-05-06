@@ -9,7 +9,7 @@ class Player;
 class EntityPos;
 struct BlockPos;
 class CompoundTag;
-class ArmorSlot;
+enum class ArmorSlot;
 class EntityLink;
 class EntityDamageSource;
 class EntityEvent;
