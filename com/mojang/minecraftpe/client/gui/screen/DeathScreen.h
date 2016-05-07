@@ -1,9 +1,7 @@
 #pragma once
 
 #include "Screen.h"
-
-class Button;
-class TButton;
+//class TButton;
 
 class DeathScreen : public Screen {
 public:
@@ -12,9 +10,15 @@ public:
 //std::shared_ptr<Touch::TButton> respawnButton;
 //std::shared_ptr<Touch::TButton> quitButton;
 
-   virtual void render(int, int, float);
-   virtual void init();
-   virtual void setupPositions();
-   virtual void tick();
-   virtual void _buttonClicked(Button&);
+	DeathScreen(MinecraftClient&)
+
+	virtual void handleButtonPress(short);
+	virtual bool renderGameBehind() const;
+	virtual std::string getScreenName();
+	virtual void render(int, int, float);
+	virtual void init();
+	virtual void setupPositions();
+	virtual void tick();
+	virtual void buttonClicked(Button&);
+	virtual void _controllerDirectionChanged(int, StickDirection);
 };
