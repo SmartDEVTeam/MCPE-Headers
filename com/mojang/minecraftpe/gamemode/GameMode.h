@@ -9,7 +9,7 @@ class Player;
 class BlockPos;
 class Vec3;
 class ItemInstance;
-enum class InputMode;
+class InputMode;
 
 class GameMode {
 public:
@@ -27,11 +27,11 @@ public:
 	virtual void tick();
 	virtual void getPickRange(Player*, const InputMode&, bool);
 	virtual bool useItem(Player&, ItemInstance&);
-	virtual bool useItemOn(Player&, ItemInstance*, const BlockPos& signed char, const Vec3&);
+	virtual bool useItemOn(Player&, ItemInstance*, const BlockPos&, signed char, const Vec3&);
 	virtual void interact(Player&, Entity&);
 	virtual void attack(Player&, Entity&);
 	virtual void releaseUsingItem(Player&);
 	virtual void setTrialMode(bool);
 	virtual bool isInTrialMode();
-	virtual void registerUpsellScreenCallback(std::function<void()(bool)>);//Need help here
+	//virtual void registerUpsellScreenCallback(std::function<void()(bool)>);//Need help here
 };
