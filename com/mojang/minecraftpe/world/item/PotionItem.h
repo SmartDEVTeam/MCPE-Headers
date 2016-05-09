@@ -1,11 +1,9 @@
 #pragma once
 
-#include "Item"
-class ItemInstance;
-class Level;
-class Player;
+#include "Item.h"
 
-class PotionItem : public Item {
+class PotionItem : public Item
+{
 public:
 	PotionItem(const std::string&, int);
 
@@ -17,5 +15,5 @@ public:
 	virtual const std::string buildEffectDescriptionName(const ItemInstance&) const;
 	virtual const TextureUVCoordinateSet& getIcon(int, int, bool) const;
 	
-	void getEffectId(const ItemInstance*);
+	int getEffectId(const ItemInstance*);
 };

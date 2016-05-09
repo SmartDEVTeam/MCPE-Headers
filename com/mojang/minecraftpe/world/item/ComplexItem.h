@@ -1,9 +1,6 @@
 #pragma once
 
 #include "Item.h"
-class ItemInstance;
-class Level;
-class Entity;
 
 class ComplexItem : public Item {
 public:
