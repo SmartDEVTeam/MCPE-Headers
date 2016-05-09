@@ -1,9 +1,8 @@
-#pragma once 
-#include <vector> 
-#include <string> 
-#include "com/mojang/minecraftpe/world/item/ItemInstance.h"
-class Item;
-class Block;
+#pragma once
+
+#include <vector>
+#include <string>
+#include "../ItemInstance.h"
 
 class Recipes {
 public:

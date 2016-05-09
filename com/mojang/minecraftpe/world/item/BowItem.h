@@ -12,7 +12,7 @@ public:
 	virtual int getEnchantValue() const;
 	virtual bool use(ItemInstance&, Player&);
 	virtual void releaseUsing(ItemInstance*, Player*, int);
-	virtual void getAnimationFrameFor(Mob&);
+	virtual int getAnimationFrameFor(Mob&) const;
 	virtual const TextureUVCoordinateSet& getIcon(int, int, bool) const;
 
 	void _getLaunchPower(int);

@@ -2,14 +2,15 @@
 
 #include "Block.h"
 
-class DoorBlock : public Block {
+class DoorBlock : public Block
+{
 public:
 	enum class DoorType : int {};
 
 	DoorBlock(const std::string&, int, const Material&, DoorType);
 
 	virtual ~DoorBlock();
-	virtual void asItemInstance(BlockSource&, const BlockPos&, int);
+	virtual ItemInstance& asItemInstance(BlockSource&, const BlockPos&, int) const;
 	virtual bool canBeSilkTouched() const;
 	virtual bool checkIsPathable(Entity&, const BlockPos&, const BlockPos&);
 	virtual void getCompositeData(BlockSource&, const BlockPos&);
