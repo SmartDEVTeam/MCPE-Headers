@@ -4,7 +4,7 @@
 
 class TorchBlock : public Block {
 public:
-	TorchBlock();
+	TorchBlock(const std::string&, int, const std::string&);
 
 	virtual ~TorchBlock();
 	virtual void tick(BlockSource&, const BlockPos&, Random&);
