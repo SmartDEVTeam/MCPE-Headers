@@ -4,7 +4,10 @@
 
 class ChestBlock : public Block {
 public:
-	enum class ChestType : int {};
+	enum class ChestType : int {
+		NORMAL_CHEST,
+		TRAP_CHEST
+	};
 
 	ChestBlock(const std::string&, int, ChestBlock::ChestType);
 

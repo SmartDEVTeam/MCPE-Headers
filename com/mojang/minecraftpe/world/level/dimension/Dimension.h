@@ -24,19 +24,18 @@ class Dimension : public LevelListener {
 private:
 	Level *level;
 	DimensionId id;
-
 	bool ultrawarm;
 	bool ceiling;
 
 public:
-	static std::unique_ptr<Dimension> createNew(DimensionId id, Level& level);
+	static std::unique_ptr<Dimension> createNew(DimensionId, Level&);
 
 	Dimension(Level&, DimensionId);
 
 	std::unique_ptr<ChunkSource> _createGenerator(GeneratorType);
 
 	virtual ~Dimension();
-	virtual void onBlockChanged(BlockSource&, cosnt BlockPos&, FullBlock, FullBlock, int);
+	virtual void onBlockChanged(BlockSource&, const BlockPos&, FullBlock, FullBlock, int);
 	virtual void onBlockEvent(BlockSource&, int, int, int, int, int);
 	virtual void onNewChunkFor(Player&, LevelChunk&);
 	virtual void init();
@@ -73,4 +72,3 @@ public:
 	int getHeight() const;
 	bool isDay() const;
 };
-
