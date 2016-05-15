@@ -3,7 +3,6 @@
 #include <memory>
 
 #include "AbstractScreen.h"
-
 class AbstractScreenSetupCleanupStrategy;
 
 class BaseScreen : public AbstractScreen {

@@ -8,10 +8,10 @@ class PlayScreen : public Screen, public AbstractScreen
 public:
 	PlayScreen(MinecraftClient&, bool);
 
-	virtual ~PlayerScren();
+	virtual ~PlayScreen();
 	virtual void onFocusGained();
-	virtual void handleButtonPress();
-	virtual void handleBackEvent();
+	virtual void handleButtonPress(short);
+	virtual void handleBackEvent(bool);
 	virtual std::string getScreenName();
 	virtual void render(int, int, float);
 	virtual void init();
