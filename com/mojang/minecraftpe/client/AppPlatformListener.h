@@ -1,11 +1,13 @@
 #pragma once
 
-class AppPlatformListener {
+class AppPlatformListener
+{
 public:
 	char apl_vars[4];
 
-	AppPlatformListener(bool);
 	AppPlatformListener();
+	AppPlatformListener(bool);
+
 	virtual ~AppPlatformListener();
 	virtual void onLowMemory();
 	virtual void onAppSuspended();

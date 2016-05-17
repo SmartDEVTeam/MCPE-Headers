@@ -43,6 +43,7 @@ public:
 	virtual void setKeyboardHeight(MinecraftClient*, float, const Vec2&);
 	virtual void pointInside(int, int);
 	virtual void suppressOtherGUI();
+	virtual void setTextboxText(const std::string&);
 	virtual bool hasFocus() const;
 	virtual void setFocus(bool);
 	virtual void handleControllerDirectionHeld(int, StickDirection);
