@@ -92,6 +92,7 @@ public:
 	virtual void displayLocalizableMessage(const std::string&, const std::vector<std::string, std::allocator<std::string>>&);
 	virtual void startSleepInBed(const BlockPos&);
 	virtual void stopSleepInBed(bool, bool);
+	virtual bool canStartSleepInBed();
 	virtual void getSleepTimer() const;
 	virtual void openTextEdit(BlockEntity*);
 	virtual bool isLocalPlayer() const;
@@ -99,9 +100,9 @@ public:
 	virtual void setPlayerGameTypePacketReceived(GameType);
 	virtual void setPlayerGameType(GameType);
 	virtual void _crit(Entity&);
-	virtual void getTelemetry();
+	virtual void getTelemetry() const;
 	virtual void sendTelemetryPacket(const TelemetryEventPacket&);
-	virtual void closeContainer();
+	virtual void deleteContainerManager();
 	virtual void onMovePlayerPacketNormal(const Vec3&, const Vec2&);
 
 	ItemInstance* getSelectedItem() const;
