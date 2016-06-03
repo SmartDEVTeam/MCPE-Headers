@@ -38,6 +38,7 @@ public:
 	char screen_vars6[32]; // 104
 
 	Screen(MinecraftClient&);
+
 	virtual ~Screen();
 	virtual void _init(int, int);
 	virtual void setSize(int, int);
