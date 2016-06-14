@@ -47,7 +47,8 @@ public:
 	ArmorMaterial& armorMaterial;	// 80
 
 public:
-	ArmorItem(const std::string&, int, const ArmorItem::ArmorMaterial &, int, ArmorSlot);
+	ArmorItem(const std::string&, int, const ArmorItem::ArmorMaterial&, int, ArmorSlot);
+	
 	virtual ~ArmorItem();
 	virtual bool isArmor() const;
 	virtual const std::string& appendFormattedHovertext(const ItemInstance&, const Player&, std::string&, bool) const;
@@ -56,7 +57,9 @@ public:
 	virtual int getEnchantValue() const;
     virtual int getColor(const ItemInstance&) const;
     virtual void dispense(BlockSource&, Container&, int, const Vec3&, signed char);
-	ItemInstance getTierItem();
+	
+	ItemInstance getTierItem() const;
+	bool hasCustomColor(const ItemInstance&) const;
 	void setColor(ItemInstance&, const Color&);
 	void clearColor(ItemInstance&);
 	int getSlotForItem(const ItemInstance&);

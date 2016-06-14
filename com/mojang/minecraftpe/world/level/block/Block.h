@@ -1,7 +1,9 @@
 #pragma once
+
 #include <string>
 #include <vector>
 #include <memory>
+
 class Material;
 class BlockEntity;
 struct BlockPos;
@@ -15,6 +17,7 @@ struct Vec3;
 class Brightness;
 class TextureAtlas;
 class Container;
+class BlockProperty;
 #include "../../../client/renderer/texture/TextureUVCoordinateSet.h"
 #include "../../../client/renderer/texture/TextureAtlasTextureItem.h"
 #include "../../util/Color.h"
@@ -101,8 +104,6 @@ public:
 
 	Block(const Block&);
 	Block(const std::string&, int, const Material&);
-	Block(const std::string&, int, TextureUVCoordinateSet, const Material&);
-	Block(const std::string&, int, const std::string&, const Material&);
 
 	/* vtable */
 	virtual ~Block();
@@ -111,7 +112,6 @@ public:
 	virtual bool isObstructingChests(BlockSource&, const BlockPos&);
 	virtual void randomlyModifyPosition(const BlockPos&, int&) const;
 	virtual void randomlyModifyPosition(const BlockPos&) const;
-	virtual const TextureUVCoordinateSet& getCarriedTexture(signed char, int);
 	virtual bool addAABBs(BlockSource&, const BlockPos&, const AABB*, std::vector<AABB>&);
 	virtual const AABB& getAABB(BlockSource&, const BlockPos&, AABB&, int, bool, int);
 	virtual bool addCollisionShapes(BlockSource&, const BlockPos&, const AABB*, std::vector<AABB>&, Entity*);
@@ -121,7 +121,9 @@ public:
 	virtual bool isInteractiveBlock() const;
 	virtual bool isWaterBlocking() const;
 	virtual bool isHurtableBlock() const;
-	virtual bool isDoorBlock() const;
+	virtual bool isFenceBlock() const;
+	virtual bool isStairBlock() const;
+	virtual bool isRailBlock() const;
 	virtual bool isRedstoneBlock() const;
 	virtual bool isRedstoneAttachable() const;
 	virtual bool isSignalSource() const;
@@ -137,6 +139,8 @@ public:
 	virtual void onStepOn(Entity&, const BlockPos&);
 	virtual void onFallOn(BlockSource&, const BlockPos&, Entity*, float);
 	virtual void onRedstoneUpdate(BlockSource&, const BlockPos&, int, bool);
+	virtual void onMove(BlockSource&, const BlockPos&, const BlockPos&);
+	virtual void detachesOnPistonMove(BlockSource&, const BlockPos&);
 	virtual void onLoaded(BlockSource&, const BlockPos&);
 	virtual void getRedstoneProperty(BlockSource&, const BlockPos&);
 	virtual void updateEntityAfterFallOn(Entity&);
@@ -162,6 +166,8 @@ public:
 	virtual void clip(BlockSource&, const BlockPos&, const Vec3&, const Vec3&, bool, int);
 	virtual bool use(Player&, const BlockPos&);
 	virtual int getPlacementDataValue(Mob&, const BlockPos&, signed char, const Vec3&, int);
+	virtual void clacVariant(BlockSource&, const BlockPos&, signed char) const;
+	virtual bool isAttachedTo(BlockSource&, const BlockPos&);
 	virtual void attack(Player*, const BlockPos&);
 	virtual void handleEntityInside(BlockSource&, const BlockPos&, Entity*, Vec3&);
 	virtual bool entityInside(BlockSource&, const BlockPos&, Entity&);
@@ -180,10 +186,6 @@ public:
 	virtual bool hasComparatorSignal();
 	virtual int getComparatorSignal(BlockSource&, const BlockPos&, signed char, int);
 	virtual bool shouldRenderFace(BlockSource&, const BlockPos&, signed char, const AABB&) const;
-	virtual const TextureUVCoordinateSet& getTexture(signed char);
-	virtual const TextureUVCoordinateSet& getTexture(signed char, int);
-	virtual const TextureUVCoordinateSet& getTexture(BlockSource&, const BlockPos&, signed char);
-	virtual void getTessellatedUVs();
 	virtual int getIconYOffset() const;
 	virtual std::string buildDescriptionName(const ItemInstance&) const;
 	virtual int getColor(int) const;
@@ -196,6 +198,8 @@ public:
 	virtual int getExtraRenderLayers();
 	virtual const AABB& getVisualShape(BlockSource&, const BlockPos&, AABB&, bool);
 	virtual const AABB& getVisualShape(unsigned char, AABB&, bool);
+	virtual void getVariant(int) const;
+	virtual void getMappedFace(signed char, int);
 	virtual bool animateTick(BlockSource&, const BlockPos&, Random&);
 	virtual std::string getDebugText(std::vector<std::string>&);
 	virtual Block* init();
@@ -211,6 +215,7 @@ public:
 	virtual Block* setFriction(float);
 	virtual Block* setTicking(bool);
 	virtual Block* setMapColor(const Color&);
+	virtual void addProperty(BlockProperty);
 	virtual int getSpawnResourcesAuxValue(unsigned char);
 
 	const std::string& getDescriptionId() const;
@@ -219,6 +224,7 @@ public:
 	Block* setCategory(CreativeItemCategory);
 	void setSolid(bool);
 	bool isSolid() const;
+	bool hasProperty(BlockProperty) const;
 	
 	static TextureAtlasTextureItem getTextureItem(const std::string&);
 	static TextureUVCoordinateSet getTextureUVCoordinateSet(const std::string&, int);
