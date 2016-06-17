@@ -176,7 +176,6 @@ public:
 	virtual int getExperienceDrop(Random&) const;
 	virtual bool canBeBuiltOver(BlockSource&, const BlockPos&) const;
 	virtual void triggerEvent(BlockSource&, const BlockPos&, int, int);
-	virtual TextureUVCoordinateSet getTextureNum(int);
 	virtual void getMobToSpawn(BlockSource&, const BlockPos&) const;
 	virtual Color getMapColor(const FullBlock&) const;
 	virtual Color getMapColor() const;
@@ -226,8 +225,6 @@ public:
 	bool isSolid() const;
 	bool hasProperty(BlockProperty) const;
 	
-	static TextureAtlasTextureItem getTextureItem(const std::string&);
-	static TextureUVCoordinateSet getTextureUVCoordinateSet(const std::string&, int);
 	static void initBlocks();
 	static void teardownBlocks();
 
@@ -260,10 +257,12 @@ public:
 	static Block* mBed; // 26
 	static Block* mGoldenRail; // 27
 	static Block* mDetectorRail; // 28
-	static Block* mPistonSticky; // 29
+	static Block* mStickyPiston; // 29
 	static Block* mWeb; // 30
 	static Block* mTallgrass; // 31
 	static Block* mDeadBush; // 32
+	static Block* mPiston; // 33
+	static Block* mPistonArm; // 34
 	static Block* mWool; // 35
 	static Block* mYellowFlower; // 37
 	static Block* mRedFlower; // 38
@@ -417,5 +416,6 @@ public:
 	static Block* mNetherReactor; // 247
 	static Block* mInfoUpdateGame1; // 248
 	static Block* mInfoUpdateGame2; // 249
+	static Block* mObserver; // 251
 	static Block* mInfoReserved6; // 255
 };
