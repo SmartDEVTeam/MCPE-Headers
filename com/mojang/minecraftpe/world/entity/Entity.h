@@ -214,7 +214,7 @@ public:
 	virtual std::string getDebugText(std::vector<std::string, std::allocator<std::string>>&);
 	virtual void setSize(float, float);
 	virtual void setPos(const EntityPos&);
-	virtual void outOfWorld();
+	virtual bool outOfWorld();
 	virtual void markHurt();
 	virtual void burn(int);
 	virtual void lavaHurt();

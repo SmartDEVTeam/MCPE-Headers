@@ -12,12 +12,12 @@ public:
 	virtual void move(const Vec3&);
 	virtual void normalTick();
 	virtual void rideTick();
-	virtual bool startRiding(Entity&);
+	virtual void startRiding(Entity&);
 	virtual void hurt(const EntityDamageSource&, int);
 	virtual void handleInsidePortal(const BlockPos&);
 	virtual void changeDimension(DimensionId);
 	virtual void changeDiemnsion(ChangeDimensionPacket&);
-	virtual void getControllingPlayer() const;
+	virtual Player* getControllingPlayer() const;
 	virtual void chackFallDamage(float, bool);
 	virtual void stopRiding(bool);
 	virtual bool outOfWorld();
