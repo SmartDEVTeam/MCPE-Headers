@@ -2,7 +2,7 @@
 
 #include <cmath>
 
-class BlockPos;
+struct BlockPos;
 
 struct Vec3 {
 	float x, y, z;

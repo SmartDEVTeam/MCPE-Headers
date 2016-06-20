@@ -3,4 +3,3 @@
 struct BlockPos {
 	int x, y, z;
 };
-

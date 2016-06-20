@@ -1,10 +1,10 @@
 #pragma once
 
-#include "texture/TextureUVCoordinateSet.h"
-#include "../../world/phys/AABB.h"
-#include "MaterialPtr.h"
-#include "../../world/level/block/BlockShape.h"
-#include "../../CommonTypes.h"
+#include "../texture/TextureUVCoordinateSet.h"
+#include "../../../world/phys/AABB.h"
+#include "../MaterialPtr.h"
+#include "../../../world/level/block/BlockShape.h"
+#include "../../../CommonTypes.h"
 
 class Block;
 class BlockSource;
@@ -12,9 +12,7 @@ class Tessellator;
 class BlockPos;
 class Vec3;
 
-namespace mce {
-	class TexturePtr;
-};
+namespace mce { class TexturePtr; };
 
 class BlockTessellator {
 public:
@@ -37,7 +35,10 @@ public:
 	Tessellator& tessellator; // 664
 	AABB aabb; // 668
 
-public:
+	BlockTessellator(Tessellator&, BlockSource*)
+
+	~BlockTessellator();
+
 	bool tessellateInWorld(Block&, const BlockPos&, bool);
 	bool tessellateBlockInWorld(Block&, const BlockPos&);
 	void renderGuiBlock(const FullBlock&, const mce::TexturePtr&, float, float);
