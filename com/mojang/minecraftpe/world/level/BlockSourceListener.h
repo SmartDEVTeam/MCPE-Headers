@@ -1,12 +1,15 @@
 #pragma once
-#include <memory>
-class BlockSource;
-struct BlockPos;
-class BlockEntity;
-#include "../../CommonTypes.h"
 
-class BlockSourceListener {
-public:
+struct BlockSource;
+struct BlockPos;
+struct FullBlock;
+struct BlockEntity;
+struct Entity;
+
+#include <memory> // for unique_ptr
+
+struct BlockSourceListener
+{
 	virtual ~BlockSourceListener();
 	virtual void onSourceCreated(BlockSource&);
 	virtual void onSourceDestroyed(BlockSource&);

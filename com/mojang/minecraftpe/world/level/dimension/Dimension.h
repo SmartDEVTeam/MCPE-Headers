@@ -1,38 +1,32 @@
 #pragma once
 
-#include <string>
-#include <memory>
+struct CompoundTag;
+struct Packet;
+struct MoveEntityPacketData;
+struct Level;
+struct ChunkSource;
 
-#include "../LevelListener.h"
 #include "DimensionId.h"
-#include "../GeneratorType.h"
-#include "../../util/Color.h"
-class FullBlock;
-class Level;
-class BlockSource;
-class BlockPos;
-class Player;
-class LevelChunk;
-class CompoundTag;
-class ChunkSource;
-class Packet;
-class MoveEntityPacketData;
-class Entity;
-class SaveData;
+#include "GeneratorType.h"
+#include "../../client/renderer/Color.h"
 
-class Dimension : public LevelListener {
-private:
-	Level *level;
-	DimensionId id;
-	bool ultrawarm;
-	bool ceiling;
+#include "../listeners/LevelListener.h"
 
-public:
-	static std::unique_ptr<Dimension> createNew(DimensionId, Level&);
+struct Dimension
+: public LevelListener
+{
+	char filler[84]; // 4
+	Level& level; // 88
+	char filler2[88]; // 92
 
 	Dimension(Level&, DimensionId);
 
+	Color getSkyColor(const Entity&, float);
+
 	std::unique_ptr<ChunkSource> _createGenerator(GeneratorType);
+	void setCeiling(bool);
+
+	static std::unique_ptr<Dimension> createNew(DimensionId, Level&);
 
 	virtual ~Dimension();
 	virtual void onBlockChanged(BlockSource&, const BlockPos&, FullBlock, FullBlock, int);
@@ -49,26 +43,15 @@ public:
 	virtual float getCloudHeight() const;
 	virtual bool mayRespawn() const;
 	virtual bool hasGround() const;
-	virtual void getSpawnYPosition();
+	virtual int getSpawnYPosition();
 	virtual bool hasBedrockFog();
 	virtual float getClearColorScale();
-	virtual std::string getName() const = 0;
+	virtual const std::string getName() const = 0;
 	virtual void load(const CompoundTag&);
 	virtual void save(CompoundTag&);
 	virtual void sendDimensionPackets();
 	virtual void sendBroadcast(const Packet&, Player*);
 	virtual void addMoveEntityPacket(const MoveEntityPacketData&);
 	virtual void addSetEntityMotionPacket(Entity&);
-	virtual void getTimeOfDay(int, float) const;
-
-	ChunkSource *getChunkSource() const;
-
-	void setCeiling(bool value);
-	void setUltraWarm(bool value);
-
-	Level *getLevel() const;
-	Level *getLevelCount() const;
-	DimensionId getId() const;
-	int getHeight() const;
-	bool isDay() const;
+	virtual float getTimeOfDay(int, float) const;
 };
