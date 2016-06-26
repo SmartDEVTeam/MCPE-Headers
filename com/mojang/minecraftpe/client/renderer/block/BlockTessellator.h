@@ -35,8 +35,7 @@ public:
 	Tessellator& tessellator; // 664
 	AABB aabb; // 668
 
-	BlockTessellator(Tessellator&, BlockSource*)
-
+	BlockTessellator(Tessellator&, BlockSource*);
 	~BlockTessellator();
 
 	bool tessellateInWorld(Block&, const BlockPos&, bool);

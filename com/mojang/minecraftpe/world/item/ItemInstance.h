@@ -12,6 +12,7 @@ class Entity;
 class Player;
 class ItemEnchants;
 #include "../../UseAnimation.h"
+#include "../../util/Color.h"
 
 class ItemInstance {
 public:
