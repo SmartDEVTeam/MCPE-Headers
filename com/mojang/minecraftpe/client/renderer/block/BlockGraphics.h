@@ -85,7 +85,6 @@ public:
 	void getFaceTextureIsotropic();
 	Color getMapColor(const FullBlock) const;
 	Color getMapColor() const;
-	int getRenderLayer(BlockSource&, const BlockPos&) const;
 	int getRenderLayer() const;
 	SoundType& getSoundType();
 	const TextureUVCoordinateSet& getTexture(signed char) const;
@@ -94,7 +93,6 @@ public:
 	bool isFullAndOpaque(const Block&);
 	bool isFullAndOpaque();
 	void lookupByName(const std::string&, bool);
-	void prepareRender(BlockSource&, const BlockPos&);
 	void reloadBlockUVs(TextureAtlas&);
 	void setAllFacesIsotropic();
 	void setBlockShape(BlockGraphics&, const Json::Value&);

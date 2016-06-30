@@ -54,7 +54,7 @@ public:
 	BlockID blockId; // 4
 	unsigned int textureIsotropic; // 8
 	std::string name; // 12
-	TextureUVCoordinateSet texture; // 16
+	//TextureUVCoordinateSet texture; // 16
 	const Block::SoundType& soundType; // 44
 	bool replaceable;
 	bool canBuildOver; // 49
@@ -166,8 +166,8 @@ public:
 	virtual void clip(BlockSource&, const BlockPos&, const Vec3&, const Vec3&, bool, int);
 	virtual bool use(Player&, const BlockPos&);
 	virtual int getPlacementDataValue(Mob&, const BlockPos&, signed char, const Vec3&, int);
-	virtual void clacVariant(BlockSource&, const BlockPos&, signed char) const;
-	virtual bool isAttachedTo(BlockSource&, const BlockPos&);
+	virtual void calcVariant(BlockSource&, const BlockPos&, signed char);
+	virtual bool isAttachedTo(BlockSource&, const BlockPos&) const;
 	virtual void attack(Player*, const BlockPos&);
 	virtual void handleEntityInside(BlockSource&, const BlockPos&, Entity*, Vec3&);
 	virtual bool entityInside(BlockSource&, const BlockPos&, Entity&);
