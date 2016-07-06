@@ -1,7 +1,9 @@
 #pragma once
+
 #include <string>
 #include <memory>
 #include <vector>
+
 class BlockSource;
 class Level;
 class Material;
@@ -11,7 +13,6 @@ struct BlockPos;
 class CompoundTag;
 enum class ArmorSlot;
 class EntityLink;
-class EntityDamageSource;
 class EntityEvent;
 class ItemInstance;
 class ChangeDimensionPacket;
@@ -24,6 +25,7 @@ class EntityLocation;
 #include "EntityType.h"
 #include "EntityRendererId.h"
 #include "SynchedEntityData.h"
+#include "EntityDamageSource.h"
 #include "../level/dimension/dimensionId.h"
 #include "../phys/AABB.h"
 #include "../phys/Vec3.h"
