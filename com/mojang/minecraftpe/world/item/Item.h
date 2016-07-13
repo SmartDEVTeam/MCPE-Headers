@@ -187,7 +187,7 @@ public:
 	static Item* mPainting; // 321
 	static Item* mApple_gold; // 322
 	static Item* mSign; // 323
-	static Item* Door_wood; // 324
+	static Item* mDoor_wood; // 324
 	static Item* mBucket; // 325
 	static Item* mMinecart; // 328
 	static Item* mSaddle; // 329

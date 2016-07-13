@@ -102,7 +102,6 @@ public:
 	static const Block::SoundType SOUND_STONE;
 	static const Block::SoundType SOUND_WOOD;
 
-	Block(const Block&);
 	Block(const std::string&, int, const Material&);
 
 	/* vtable */
@@ -166,8 +165,8 @@ public:
 	virtual void clip(BlockSource&, const BlockPos&, const Vec3&, const Vec3&, bool, int);
 	virtual bool use(Player&, const BlockPos&);
 	virtual int getPlacementDataValue(Mob&, const BlockPos&, signed char, const Vec3&, int);
-	virtual void calcVariant(BlockSource&, const BlockPos&, signed char);
-	virtual bool isAttachedTo(BlockSource&, const BlockPos&) const;
+	virtual void calcVariant(BlockSource&, const BlockPos&, unsigned char);
+	virtual bool isAttachedTo(BlockSource&, const BlockPos&, BlockPos&);
 	virtual void attack(Player*, const BlockPos&);
 	virtual void handleEntityInside(BlockSource&, const BlockPos&, Entity*, Vec3&);
 	virtual bool entityInside(BlockSource&, const BlockPos&, Entity&);
@@ -198,7 +197,7 @@ public:
 	virtual const AABB& getVisualShape(BlockSource&, const BlockPos&, AABB&, bool);
 	virtual const AABB& getVisualShape(unsigned char, AABB&, bool);
 	virtual void getVariant(int) const;
-	virtual void getMappedFace(signed char, int);
+	virtual void getMappedFace(signed char, int) const;
 	virtual bool animateTick(BlockSource&, const BlockPos&, Random&);
 	virtual std::string getDebugText(std::vector<std::string>&);
 	virtual Block* init();
