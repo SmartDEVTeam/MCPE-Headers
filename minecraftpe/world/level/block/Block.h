@@ -54,7 +54,7 @@ public:
 	BlockID blockId; // 4
 	unsigned int textureIsotropic; // 8
 	std::string name; // 12
-	//TextureUVCoordinateSet texture; // 16
+	char filler[4];
 	const Block::SoundType& soundType; // 44
 	bool replaceable;
 	bool canBuildOver; // 49

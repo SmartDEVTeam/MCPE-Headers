@@ -37,10 +37,10 @@ public:
 		std::string getPlaceSound() const;
 	};
 
-	static std::shared_ptr<TextureAtlas> mTerrainTextureAtlas;
+	static std::unordered_map<std::string, BlockGraphics*> mBlockLookupMap;
+	static BlockGraphics *mBlocks[];
 	static std::vector<std::unique_ptr<BlockGraphics>> mOwnedBlocks;
-	static BlockGraphics* mBlocks[256];
-	//static BlockGraphics* mBlockLookupMap; //HALP
+	static TerrainTextureAtlas *mTerrainTextureAtlas;
 	
 	static const BlockGraphics::SoundType SOUND_ANVIL;
 	static const BlockGraphics::SoundType SOUND_CLOTH;
