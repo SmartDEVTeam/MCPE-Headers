@@ -36,6 +36,9 @@ public:
 		std::string getBreakSound() const;
 		std::string getPlaceSound() const;
 	};
+	
+	unsigned char id; // 4
+	//char filler1[];
 
 	static std::unordered_map<std::string, BlockGraphics*> mBlockLookupMap;
 	static BlockGraphics *mBlocks[];

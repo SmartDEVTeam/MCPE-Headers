@@ -51,13 +51,13 @@ public:
 	};
 
 
-	BlockID blockId; // 4
+	unsigned char id; // 4
 	unsigned int textureIsotropic; // 8
 	std::string name; // 12
-	char filler[4];
+	char filler1[4]; // 16
 	const Block::SoundType& soundType; // 44
-	bool replaceable;
-	bool canBuildOver; // 49
+	bool replaceable; // 45
+	bool canBuildOver; // 49 // shouldn't this be 46 because a bool is 1 byte long?
 	int renderLayer; // 52
 	BlockShape blockShape; // 56
 	int properties; // 60
