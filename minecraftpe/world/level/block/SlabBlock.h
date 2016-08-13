@@ -2,9 +2,10 @@
 
 #include "Block.h"
 
-class SlabBlock : public Block {
+class SlabBlock : public Block
+{
 public:
-	SlabBlock(const std::string&, int, const std::string&, bool, const Material&);
+	SlabBlock(const std::string&, int, bool, const Material&);
 
 	virtual ~SlabBlock();
 	virtual bool canBeSilkTouched() const;
@@ -19,3 +20,4 @@ public:
 	bool isBottomSlab(BlockSource&, const BlockPos&) const;
 	bool isBottomSlab(int);
 };
+

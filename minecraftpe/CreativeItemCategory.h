@@ -1,8 +1,10 @@
 #pragma once
 
-enum class CreativeItemCategory : int {
-	BLOCKS = 1,
-	DECORATIONS,
-	TOOLS,
-	ITEMS
+enum class CreativeItemCategory : int
+{
+	Blocks = 1,
+	Decorations,
+	Tools,
+	Items
 };
+

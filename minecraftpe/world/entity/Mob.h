@@ -75,7 +75,7 @@ public:
 	virtual void causeFallDamage(float);
 	virtual bool canAddRider(Entity&) const;
 	virtual void buildDebugInfo(std::string&) const;
-	virtual void outOfWorld();
+	virtual bool outOfWorld();
 	virtual void readAdditionalSaveData(const CompoundTag&);
 	virtual void addAdditionalSaveData(CompoundTag&);
 	virtual void _playStepSound(const BlockPos&, int);

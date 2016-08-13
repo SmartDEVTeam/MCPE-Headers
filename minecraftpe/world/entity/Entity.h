@@ -30,7 +30,7 @@ class EntityLocation;
 #include "../phys/AABB.h"
 #include "../phys/Vec3.h"
 #include "../phys/Vec2.h"
-#include "../util/Color.h"
+#include "../../util/Color.h"
 #include "../../CommonTypes.h"
 
 typedef std::vector<Entity*> EntityList;

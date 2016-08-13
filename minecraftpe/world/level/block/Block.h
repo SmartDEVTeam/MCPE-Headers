@@ -27,7 +27,8 @@ class BlockProperty;
 #include "BlockShape.h"
 #include "../../../CreativeItemCategory.h"
 
-class Block {
+class Block
+{
 public:
 	class SoundType {
 	public:
@@ -418,3 +419,4 @@ public:
 	static Block* mObserver; // 251
 	static Block* mInfoReserved6; // 255
 };
+
