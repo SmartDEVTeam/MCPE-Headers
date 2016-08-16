@@ -1,23 +1,32 @@
 #pragma once
 
+#include <string>
+
+class ResourceLocation;
+
+// size: 28
+// 0.15.6
 class TextureUVCoordinateSet {
-	float minU;
-	float minV;
-	float maxU;
-	float maxV;
-	unsigned short width;
-	unsigned short height;
-	int index, file;
+	float minU; // 0
+	float minV; // 4
+	float maxU; // 8
+	float maxV; // 12
+	unsigned short width; // 16
+	unsigned short height; // 18
+	ResourceLocation file; // 20
 
 public:
 	TextureUVCoordinateSet();
-	TextureUVCoordinateSet(float, float, float, float, unsigned short, unsigned short);
+	TextureUVCoordinateSet(float, float, float, float, unsigned short, unsigned short, ResourceLocation);
 
-	float getMinU();
-	float getMinV();
-	float getMaxU();
-	float getMaxV();
-	void setUV(float, float, float, float);
-	float getInterpolatedU(float);
-	float getInterpolatedV(float);
+	
+	float offset(float) const;
+	float offsetHeight(float, float) const;
+	float offsetHeightPixel(float, float) const;
+	float offsetWidth(float, float) const;
+	float offsetWidthPixel(float, float) const;
+	float subTexture(float, float, int, int) const;
+	float inverseOffsetHeight(float, float) const;
+	float inverseOffsetWidth(float, float) const;
+	void fromOldSystem(int);
 };

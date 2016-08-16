@@ -1,9 +1,16 @@
 #pragma once
 #include <string>
-class TextureAtlasTextureItem;
+#include "../../AppPlatformListener.h"
+class TextureAtlasItem;
+class ResourceLocation;
 
-class TextureAtlas {
+namespace mce { class TextureGroup; };
+
+// 0.15.6
+class TextureAtlas : public AppPlatformListener {
 public:
-	TextureAtlasTextureItem& getTextureItem(const std::string&) const;
+	TextureAtlas(const ResourceLocation&, mce::TextureGroup*);
+	
+	TextureAtlasItem& getTextureItem(const std::string&) const;
 };
 
