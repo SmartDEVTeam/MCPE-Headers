@@ -5,14 +5,15 @@
 #include <memory>
 
 #include "../../../world/level/block/Block.h"
-#include "../texture/TextureUVCoordinateSet.h"
-#include "../texture/TextureAtlasItem.h"
 #include "../../../util/Color.h"
-
+class BlockSource;
+struct BlockPos;
+class AABB;
+struct Vec3;
+class Random;
+class TextureAtlas;
 namespace Json { class Value; }
 
-// Size: 324
-// 0.15.6
 class BlockGraphics {
 public:
 	class SoundType {
@@ -37,56 +38,12 @@ public:
 	};
 	
 	unsigned char id; // 4
-	Block& block; // 8
-	int textureIsotropic; // 12
-	const SoundType& soundType; // 16
-	int filler;
-	BlockShape blockShape; // 24
-	char filler2[8]; // 28
-	Color mapColor; // 36
-	AABB hitbox; // 56
-	std::string bottomTexItem; // 84
-	std::vector<TextureUVCoordinateSet> bottomTextures; // 88
-	std::string topTexItem; // 100
-	std::vector<TextureUVCoordinateSet> topTextures; // 104
-	std::string northTexItem; // 116
-	std::vector<TextureUVCoordinateSet> northTextures; // 120
-	std::string southTexItem; // 132
-	std::vector<TextureUVCoordinateSet> southTextures; // 136
-	std::string westTexItem; // 148
-	std::vector<TextureUVCoordinateSet> westTextures; // 152
-	std::string eastTexItem; // 164
-	std::vector<TextureUVCoordinateSet> eastTextures; // 168
-	std::string bottomCarriedTexItem; // 180
-	std::vector<TextureUVCoordinateSet> bottomCarriedTextures; // 184
-	std::string topCarriedTexItem; // 196
-	std::vector<TextureUVCoordinateSet> topCarriedTextures; // 200
-	std::string northCarriedTexItem; // 212
-	std::vector<TextureUVCoordinateSet> northCarriedTextures; // 216
-	std::string southCarriedTexItem; // 228
-	std::vector<TextureUVCoordinateSet> southCarriedTextures; // 232
-	std::string westCarriedTexItem; // 244
-	std::vector<TextureUVCoordinateSet> westCarriedTextures; // 248
-	std::string eastCarriedTexItem; // 260
-	std::vector<TextureUVCoordinateSet> eastCarriedTextures; // 264
-	std::string bottomTexName; // 276
-	std::string topTexName; // 280
-	std::string northTexName; // 284
-	std::string southTexName; // 288
-	std::string westTexName; // 292
-	std::string eastTexName; // 296
-	std::string bottomCarriedTexName; // 300
-	std::string topCarriedTexName; // 304
-	std::string northCarriedTexName; // 308
-	std::string southCarriedTexName; // 312
-	std::string westCarriedTexName; // 316
-	std::string eastCarriedTexName; // 320
-	
+	//char filler1[];
 
 	static std::unordered_map<std::string, BlockGraphics*> mBlockLookupMap;
-	static BlockGraphics* mBlocks[256];
+	static BlockGraphics *mBlocks[];
 	static std::vector<std::unique_ptr<BlockGraphics>> mOwnedBlocks;
-	static TextureAtlas* mTerrainTextureAtlas;
+	static TerrainTextureAtlas *mTerrainTextureAtlas;
 	
 	static const BlockGraphics::SoundType SOUND_ANVIL;
 	static const BlockGraphics::SoundType SOUND_CLOTH;
@@ -124,7 +81,7 @@ public:
 	virtual void randomlyModifyPosition(const BlockPos&) const;
 	virtual void setVisualShape(const AABB&);
 	virtual void setVisualShape(const Vec3&, const Vec3&);
-	virtual BlockGraphics* setSoundType(const BlockGraphics::SoundType&);
+	virtual void setSoundType(const BlockGraphics::SoundType&);
 
 	Block& getBlock() const;
 	BlockShape getBlockShape() const;
@@ -136,27 +93,27 @@ public:
 	const TextureUVCoordinateSet& getTexture(signed char) const;
 	const TextureUVCoordinateSet& getTexture(signed char, int) const;
 	bool isAlphaTested();
+	bool isFullAndOpaque(const Block&);
 	bool isFullAndOpaque();
 	void lookupByName(const std::string&, bool);
 	void reloadBlockUVs(TextureAtlas&);
-	BlockGraphics* setAllFacesIsotropic();
-	BlockGraphics* setBlockShape(BlockShape);
-	BlockGraphics* setCarriedTextureItem(const std::string&);
-	BlockGraphics* setCarriedTextureItem(const std::string&, const std::string&, const std::string&);
-	BlockGraphics* setMapColor(const Color&);
-	BlockGraphics* setTextureIsotropic(unsigned int);
-	BlockGraphics* setTextureItem(const std::string&);
-	BlockGraphics* setTextureItem(const std::string&, const std::string&, const std::string&);
-	BlockGraphics* setTextureItem(const std::string&, const std::string&, const std::string&, const std::string&, const std::string&, const std::string&);
-	
+	void setAllFacesIsotropic();
+	void setBlockShape(BlockGraphics&, const Json::Value&);
+	void setBlockShape(BlockShape);
+	void setCarriedTextureItem(const std::string&);
+	void setCarriedTextureItem(const std::string&, const std::string&, const std::string&);
+	void setCarriedTextures(BlockGraphics&, const Json::Value&);
+	void setMapColor(const Color&);
+	void setTextureAtlas(std::shared_ptr<TextureAtlas>);
+	void setTextureIsotropic(BlockGraphics&, const Json::Value&);
+	void setTextureIsotropic(unsigned int);
+	void setTextureItem(const std::string&);
+	void setTextureItem(const std::string&, const std::string&, const std::string&);
+	void setTextureItem(const std::string&, const std::string&, const std::string&, const std::string&, const std::string&, const std::string&);
+	void setTextures(BlockGraphics&, const Json::Value&);
+
 	static void initBlocks();
-	static void teardownBlocks();	
-	static bool isFullAndOpaque(const Block&);
-	static void setTextureAtlas(std::shared_ptr<TextureAtlas>);
-	static void setTextureIsotropic(BlockGraphics&, const Json::Value&);
-	static void setTextures(BlockGraphics&, const Json::Value&);
-	static void setCarriedTextures(BlockGraphics&, const Json::Value&);
-	static void setBlockShape(BlockGraphics&, const Json::Value&);
+	static void teardownBlocks();
 	static TextureUVCoordinateSet getTextureUVCoordinateSet(const std::string&, int);
-	static TextureAtlasItem getTextureItem(const std::string&);
+	static TextureAtlasTextureItem getTextureItem(const std::string&);
 };
