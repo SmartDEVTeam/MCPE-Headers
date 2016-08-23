@@ -7,6 +7,8 @@
 #include "../../../client/renderer/block/BlockGraphics.h"
 #include "../../../util/Util.h"
 
+std::vector<Block*> BlockHelper::blocks;
+
 Block* BlockHelper::registerBlock(Block* block) {
 	Block::mOwnedBlocks.push_back(std::unique_ptr<Block>(block));
 	Block::mBlocks[block->blockId] = block;
