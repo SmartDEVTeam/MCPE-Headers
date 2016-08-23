@@ -77,7 +77,7 @@ public:
 
 
 	static std::vector<std::unique_ptr<Block>> mOwnedBlocks;
-	static std::map<const std::string, Block*> mBlockLookupMap;
+	static std::unordered_map<const std::string, Block*> mBlockLookupMap;
 	static Block* mBlocks[256];
 	static bool mSolid[256];
 	static float mTranslucency[256];

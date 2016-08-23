@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <memory>
+#include <map>
 
 #include "../../../world/level/block/Block.h"
 #include "../texture/TextureUVCoordinateSet.h"
@@ -124,7 +125,6 @@ public:
 	virtual void randomlyModifyPosition(const BlockPos&) const;
 	virtual void setVisualShape(const AABB&);
 	virtual void setVisualShape(const Vec3&, const Vec3&);
-	virtual BlockGraphics* setSoundType(const BlockGraphics::SoundType&);
 
 	Block& getBlock() const;
 	BlockShape getBlockShape() const;

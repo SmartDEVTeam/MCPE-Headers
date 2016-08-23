@@ -2,7 +2,7 @@
 
 #include <string>
 
-class ResourceLocation;
+#include "../ResourceLocation.h"
 
 // size: 28
 // 0.15.6
