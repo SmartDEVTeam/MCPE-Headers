@@ -13,3 +13,7 @@ This method is only useful if you have code stored in a Git repository.
 #### Option 2: Download and put in the mod
 One of the simplest ways is to just download this repository, and copy the `minecraftpe` folder 
 inside the `JNI` folder of your mod. However, you will not get the latest updates this way.
+
+Uses the following libraries:
+
+https://github.com/open-source-parsers/jsoncpp
