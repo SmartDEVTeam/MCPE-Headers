@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <memory>
+#include <map>
 
 class Material;
 class BlockEntity;
@@ -51,7 +52,7 @@ public:
 	};
 
 
-	unsigned char id; // 4
+	unsigned char blockId; // 4
 	std::string name; // 8
 	const Block::SoundType& soundType; // 12
 	bool replaceable; // 16
@@ -76,6 +77,7 @@ public:
 
 
 	static std::vector<std::unique_ptr<Block>> mOwnedBlocks;
+	static std::map<const std::string, Block*> mBlockLookupMap;
 	static Block* mBlocks[256];
 	static bool mSolid[256];
 	static float mTranslucency[256];

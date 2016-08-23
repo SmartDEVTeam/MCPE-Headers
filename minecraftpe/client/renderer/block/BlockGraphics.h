@@ -36,7 +36,7 @@ public:
 		std::string getPlaceSound() const;
 	};
 	
-	unsigned char id; // 4
+	unsigned char blockId; // 4
 	Block& block; // 8
 	int textureIsotropic; // 12
 	const SoundType& soundType; // 16
@@ -144,6 +144,7 @@ public:
 	BlockGraphics* setCarriedTextureItem(const std::string&);
 	BlockGraphics* setCarriedTextureItem(const std::string&, const std::string&, const std::string&);
 	BlockGraphics* setMapColor(const Color&);
+	BlockGraphics* setSoundType(const SoundType&);
 	BlockGraphics* setTextureIsotropic(unsigned int);
 	BlockGraphics* setTextureItem(const std::string&);
 	BlockGraphics* setTextureItem(const std::string&, const std::string&, const std::string&);
