@@ -27,8 +27,7 @@ class BlockProperty;
 #include "../../../CreativeItemCategory.h"
 
 // 0.15.6
-class Block
-{
+class Block {
 public:
 	class SoundType {
 	public:

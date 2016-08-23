@@ -5,4 +5,4 @@
 class Util {
 public:
 	static std::string toLower(const std::string&);
-}
+};
