@@ -3,7 +3,7 @@
 #include <string>
 #include <vector>
 #include <memory>
-#include <map>
+#include <unordered_map>
 
 class Material;
 class BlockEntity;
