@@ -26,7 +26,6 @@ class BlockProperty;
 #include "BlockShape.h"
 #include "../../../CreativeItemCategory.h"
 
-// 0.15.6
 class Block {
 public:
 	class SoundType {
@@ -121,8 +120,8 @@ public:
 	virtual bool isFenceBlock() const;
 	virtual bool isStairBlock() const;
 	virtual bool isRailBlock() const;
+	virtual bool canHurtAndBreakItem() const;
 	virtual bool isRedstoneBlock() const;
-	virtual bool isRedstoneAttachable() const;
 	virtual bool isSignalSource() const;
 	virtual int getDirectSignal(BlockSource&, const BlockPos&, int);
 	virtual bool waterSpreadCausesSpawn() const;
@@ -194,8 +193,8 @@ public:
 	virtual int getExtraRenderLayers();
 	virtual const AABB& getVisualShape(BlockSource&, const BlockPos&, AABB&, bool);
 	virtual const AABB& getVisualShape(unsigned char, AABB&, bool);
-	virtual void getVariant(int) const;
-	virtual void getMappedFace(signed char, int) const;
+	virtual int getVariant(int) const;
+	virtual signed char getMappedFace(signed char, int) const;
 	virtual bool animateTick(BlockSource&, const BlockPos&, Random&);
 	virtual std::string getDebugText(std::vector<std::string>&);
 	virtual Block* init();

@@ -1,0 +1,134 @@
+#pragma once
+
+#include "Entity.h"
+
+class Item;
+class MobEffectInstance;
+class PathNavigation;
+class LookControl;
+class MoveControl;
+class JumpControl;
+class BodyControl;
+class Sensing;
+class MobEffect;
+typedef int EntityUniqueID;
+class Attribute;
+class ItemEntity;
+class Level;
+#include "../item/ItemInstance.h"
+
+class Mob : public Entity {
+public:
+	
+	Mob(Level&);
+	Mob(EntityDefinitionGroup&, const EntityDefinitionIdenitifer&);
+	
+	/* vtable */
+	virtual ~Mob();
+	virtual void lerpTo(const Vec3&, const Vec2&, int);
+	virtual void normalTick();
+	virtual void baseTick();
+	virtual void rideTick();
+	virtual float getHeadHeight() const;
+	virtual void* playerTouch(Player&);
+	virtual bool isImmobile() const;
+	virtual bool isPickable();
+	virtual bool isPushable() const;
+	virtual bool isShootable();
+	virtual bool isSneaking() const;
+	virtual bool isAlive() const;
+	virtual void hurt(const EntityDamageSource&, int, bool, bool);
+	virtual void animateHurt();
+	virtual void doFireHurt(int);
+	virtual void handleEntityEvent(EntityEvent, int);
+	virtual void setOnFire(int);
+	virtual void causeFallDamage(float);
+	virtual bool canAddRider(Entity&) const;
+	virtual void stopRiding(bool, bool);
+	virtual void buildDebugInfo(std::string&) const;
+	virtual bool outOfWolrd();
+	virtual void readAdditionalSaveData(const CompoundTag&);
+	virtual void addAdditionalSaveData(CompoundTag&);
+	virtual void _playStepSound(const BlockPos&, int);
+	virtual void knockback(Entity*, int, float, float, float);
+	virtual void die(const EntityDamageSource&);
+	virtual void resolveDeathLoot(int);
+	virtual bool canSee(const Entity&) const;
+	virtual void onLadder(bool);
+	virtual void* spawnAnim();
+	virtual bool isSleeping() const;
+	virtual void setSneaking(bool);
+	virtual bool isSprinting() const;
+	virtual void setSprinting(bool);
+	virtual void* getVoicePitch();
+	virtual void playAmbientSound();
+	virtual void* getAmbientSoundInterval();
+	virtual void* getItemInHandIcon(const ItemInstance*, int);
+	virtual float getSpeed();
+	virtual void setSpeed(float);
+	virtual float getJumpPower() const;
+	virtual void heal(int);
+	virtual void hurtEffects(const EntityDamageSource&, int);
+	virtual float getMeleeWeaponDamageBonus(Mob*);
+	virtual float getMeleeKnockbackBonus();
+	virtual void actuallyHurt(int, const EntityDamageSource*, bool);
+	virtual bool isInvertedHealAndHarm() const;
+	virtual void travel(float, float);
+	virtual void applyFinalFriction(float);
+	virtual void updateWalkAnim();
+	virtual void aiStep();
+	virtual void pushEntities();
+	virtual void lookAt(Entity*, float, float);
+	virtual bool isLookingAtEntity();
+	virtual bool canSpawn(bool);
+	virtual bool shouldDespawn() const;
+	virtual void getAttackAnim(float);
+	virtual void performRangedAttack(Entity&, float);
+	virtual ItemInstance* getCarriedItem() const;
+	virtual void setCarriedItem(const ItemInstance&);
+	virtual int getItemUseDuration();
+	virtual void swing();
+	virtual void ate();
+	virtual float getMaxHeadXRot();
+	virtual Mob* getLastHurtByMob();
+	virtual void setLastHurtByMob(Mob*);
+	virtual Player* getLastHurtByPlayer();
+	virtual void setLastHurtByPlayer(Player*);
+	virtual Entity* getLastHurtMob();
+	virtual void setLastHurtMob(Entity*);
+	virtual bool canAttack(Mob*, bool);
+	virtual bool isAlliedTo(Mob*);
+	virtual void doHurtTarget(Entity*);
+	virtual bool canBeControlledByRider();
+	virtual void getMutableAttribute(const Attribute&);
+	virtual void getAttribute(const Attribute&) const;
+	virtual int getEquipmentCount() const;
+	virtual void* getArmorValue();
+	virtual float getArmorCoverPercentage();
+	virtual void hurtArmor(int);
+	virtual void setArmor(ArmorSlot, const ItemInstance*);
+	virtual ItemInstance* getArmor(ArmorSlot) const;
+	virtual void* getAllArmor() const;
+	virtual void* getAllHand() const;
+	virtual void* getAllEquipment();
+	virtual void* getArmorTypeHash();
+	virtual void drop(const ItemInstance*, bool);
+	virtual void sendInventory() const;
+	virtual bool canBeAffected(const MobEffectInstance&);
+	virtual float getDamageAfterMagicAbsorb(const EntityDamageSource&, int);
+	virtual void onBorn(Mob&, Mob&);
+	virtual void onLove();
+	virtual float getWaterSlowDown() const;
+	virtual bool _removeWhenFarAway();
+	virtual void jumpFromGround();
+	virtual void _pickUpItem(ItemEntity&);
+	virtual void updateAi();
+	virtual void newServerAiMobStep();
+	virtual void _serverAiMobStep();
+	virtual float getDamageAfterArmorAbsorb(const EntityDamageSource&, int)
+	virtual void dropEquipment(const EntityDamageSource&, int);
+	virtual bool useNewAi();
+	virtual void onEffectAdded(MobEffectInstance&);
+	virtual void onEffectUpdated(const MobEffectInstance&);
+	virtual void onEffectRemoved(MobEffectInstance&);
+};

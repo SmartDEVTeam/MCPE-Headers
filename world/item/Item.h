@@ -19,6 +19,7 @@ class Level;
 class Player;
 class Container;
 class BlockSource;
+class Color;
 struct Vec3;
 struct IDataInput;
 struct IDataOutput;
@@ -64,6 +65,10 @@ public:
 	virtual void setHandEquipped();
 	virtual void setUseAnimation(UseAnimation);
 	virtual void setMaxUseDuration(int);
+	virtual void setRequiresWorldBuilder(bool);
+	virtual void setExplodable(bool);
+	virtual void setIsGlint(bool);
+	virtual void setShouldDespawn(bool);
 	virtual bool canBeDepleted();
 	virtual bool canDestroySpecial(const Block*) const;
 	virtual int getLevelDataForAuxValue(int) const;
@@ -78,12 +83,13 @@ public:
 	virtual bool canDestroyInCreative() const;
 	virtual bool isLiquidClipItem(int) const;
 	virtual bool requiresInteract() const;
-	virtual const std::string& appendFormattedHovertext(const ItemInstance&, const Player&, std::string&, bool) const;
+	virtual const std::string& appendFormattedHovertext(const ItemInstance&, Level&, std::string&, bool) const;
 	virtual bool isValidRepairItem(const ItemInstance&, const ItemInstance&);
 	virtual int getEnchantSlot() const;
 	virtual int getEnchantValue() const;
 	virtual bool isComplex() const;
-	virtual int getColor(const ItemInstance&) const;
+	virtual int uniqueAuxValues() const;
+	virtual Color getColor(const ItemInstance&) const;
 	virtual bool use(ItemInstance&, Player&);
 	virtual bool useOn(ItemInstance*, Player*, int, int, int, signed char, float, float, float);
 	virtual void dispense(BlockSource&, Container&, int, const Vec3&, signed char);
@@ -96,7 +102,7 @@ public:
 	virtual const std::string buildDescriptionName(const ItemInstance&) const;
 	virtual const std::string buildEffectDescriptionName(const ItemInstance&) const;
 	virtual void readUserData(ItemInstance*, IDataInput&) const;
-	virtual void writeUserData(const ItemInstance*, IDataOutput&, bool) const;
+	virtual void writeUserData(const ItemInstance*, IDataOutput&) const;
 	virtual int getMaxStackSize(const ItemInstance*);
 	virtual void inventoryTick(ItemInstance&, Level&, Entity&, int, bool);
 	virtual void onCraftedBy(ItemInstance&, Level&, Player&);
@@ -110,7 +116,9 @@ public:
 	void init(Json::Value&);
 
 	static TextureUVCoordinateSet getTextureUVCoordinateSet(const std::string&, int);
-	static void initItems();
+	static void initClientData();
+	static void initClient(Json::Value&);
+	static void initServer(Json::Value&);
 	static void addBlockItems();
 	static void initCreativeItems();
 	static void addCreativeItem(Block*, short);
