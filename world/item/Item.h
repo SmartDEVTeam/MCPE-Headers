@@ -29,32 +29,18 @@ namespace Json { class Value; };
 
 class Item {
 public:
-	uint8_t _maxStackSize; // 4
-	std::string atlas; // 8
-	int frameCount; // 12
-	short idk; // 16
-	short itemId; // 18
-	std::string name; // 20
-	short maxDamage; // 24
-	bool foil; // 26
-	bool handEquipped; // 27
-	bool stackedByData; // 28
-	int useDuration; // 32
-	BlockID blockId; // 36
-	UseAnimation useAnimation; // 37
-	CreativeItemCategory creativeCategory; // 40
-	int idk1; // 44
-	std::string hoverTextColor; // 48
-	TextureUVCoordinateSet& icon; // 52
-	int idk2; // 56
-	std::unique_ptr<FoodItemComponent> _foodDetails; // 60
-	std::unique_ptr<SeedItemComponent> _seedDetails; // 64
+	/* copy constructor */
+	Item(const std::string&, short);
 
+	/* fields */
+	char filler[200];
+	
+	/* list */
 	static Item* mItems[4096];
+	static Item* mCreativeList[12];
 	static Random* mRandom;
 
-	Item(const std::string&, short);
-	
+	/* vtable */
 	virtual ~Item();
 	virtual Item* setIcon(const std::string&, int);
 	virtual Item* setIcon(const TextureUVCoordinateSet&);
@@ -69,6 +55,7 @@ public:
 	virtual void setExplodable(bool);
 	virtual void setIsGlint(bool);
 	virtual void setShouldDespawn(bool);
+	virtual BlockShape getBlockShape() const;
 	virtual bool canBeDepleted();
 	virtual bool canDestroySpecial(const Block*) const;
 	virtual int getLevelDataForAuxValue(int) const;
@@ -106,10 +93,12 @@ public:
 	virtual int getMaxStackSize(const ItemInstance*);
 	virtual void inventoryTick(ItemInstance&, Level&, Entity&, int, bool);
 	virtual void onCraftedBy(ItemInstance&, Level&, Player&);
+	virtual int getCooldownType() const;
+	virtual int getCooldownTime() const;
 	virtual const std::string& getInteractText(const Player&) const;
 	virtual int getAnimationFrameFor(Mob&) const;
 	virtual bool isEmissive(int) const;
-	virtual const TextureUVCoordinateSet& getIcon(int, int, bool) const;
+	virtual TextureUVCoordinateSet& getIcon(int, int, bool) const;
 	virtual int getIconYOffset() const;
 	virtual bool isMirroredArt() const;
 
@@ -117,7 +106,8 @@ public:
 
 	static TextureUVCoordinateSet getTextureUVCoordinateSet(const std::string&, int);
 	static void initClientData();
-	static void initClient(Json::Value&);
+	static void initServerData(ResourcePackManager&)
+	static void initClient(Json::Value&, Json::Value&);
 	static void initServer(Json::Value&);
 	static void addBlockItems();
 	static void initCreativeItems();
@@ -125,6 +115,7 @@ public:
 	static void addCreativeItem(Item*, short);
 	static void addCreativeItem(const ItemInstance&);
 	static void addCreativeItem(short, short);
+	static void registerItems();
 
 	static Item* mShovel_iron; // 256
 	static Item* mPickaxe_iron; // 257
@@ -240,4 +231,29 @@ public:
 	static Item* mRotten_flesh; // 367
 	static Item* mBlazeRod; // 369
 	static Item* mGhast_tear; // 370
+	static Item* mGold_nugget; // 371
+	static Item* mNether_wart; // 372
+	static Item* mPotion; // 373
+	static Item* mGlass_bottle; // 374
+	static Item* mSpider_eye; // 375
+	static Item* mFermented_spider_eye; // 376
+	static Item* mBlazePowder; // 377
+	static Item* mMagma_cream; // 378
+	static Item* mBrewing_stand; // 379
+	static Item* mCauldron; // 380
+	static Item* mEnderEye; // 381
+	static Item* mSpeckled_melon; // 382
+	static Item* mMobPlacer; // 383
+	static Item* mExperiencePotionItem; // 384
+	static Item* mFireCharge; // 385
+	static Item* mEmerald; // 388
+	static Item* mItemFrame; // 389
+	static Item* mFlowerPot; // 390
+	static Item* mCarrot; // 391
+	static Item* mPotato; // 392
+	static Item* mPotatoBaked; // 393
+	static Item* mPoisonous_potato; // 394
+	static Item* mEmptyMap; // 395
+	static Item* mGoldenCarrot; // 396
+
 };
