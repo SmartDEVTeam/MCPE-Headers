@@ -6,6 +6,7 @@
 #include "../../CreativeItemCategory.h"
 #include "../../CommonTypes.h"
 #include "../../UseAnimation.h"
+#include "../level/block/BlockShape.h"
 
 class TextureUVCoordinateSet;
 struct SeedItemComponent;
@@ -25,10 +26,22 @@ struct IDataInput;
 struct IDataOutput;
 class Color;
 class Random;
+class ResourcePackManager;
 namespace Json { class Value; };
 
 class Item {
 public:
+	class Tier {
+	public:
+		ItemInstance* getTier() const;
+
+		static Tier* WOOD;
+		static Tier* STONE;
+		static Tier* IRON;
+		static Tier* GOLD;
+		static Tier* DIAMOND;
+	};
+
 	/* copy constructor */
 	Item(const std::string&, short);
 
@@ -78,7 +91,7 @@ public:
 	virtual int uniqueAuxValues() const;
 	virtual Color getColor(const ItemInstance&) const;
 	virtual bool use(ItemInstance&, Player&);
-	virtual bool useOn(ItemInstance*, Player*, int, int, int, signed char, float, float, float);
+	virtual bool useOn(ItemInstance&, Entity&, int, int, int, signed char, float, float, float);
 	virtual void dispense(BlockSource&, Container&, int, const Vec3&, signed char);
 	virtual void useTimeDepleted(ItemInstance*, Level*, Player*);
 	virtual void releaseUsing(ItemInstance*, Player*, int);
@@ -106,7 +119,7 @@ public:
 
 	static TextureUVCoordinateSet getTextureUVCoordinateSet(const std::string&, int);
 	static void initClientData();
-	static void initServerData(ResourcePackManager&)
+	static void initServerData(ResourcePackManager&);
 	static void initClient(Json::Value&, Json::Value&);
 	static void initServer(Json::Value&);
 	static void addBlockItems();
@@ -219,7 +232,7 @@ public:
 	static Item* mBed; // 355
 	static Item* mRepeater; // 356
 	static Item* mCookie; // 357
-	static Item* mEmptyMap; // 358
+	static Item* mFilledMap; // 358
 	static Item* mShears; // 359
 	static Item* mMelon; // 360
 	static Item* mSeeds_pumpkin; // 361
