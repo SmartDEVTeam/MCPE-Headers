@@ -2,6 +2,7 @@
 
 #include <string>
 #include <memory>
+#include <vector>
 
 #include "../../CreativeItemCategory.h"
 #include "../../CommonTypes.h"
@@ -33,7 +34,7 @@ class Item {
 public:
 	class Tier {
 	public:
-		ItemInstance* getTier() const;
+		ItemInstance* getTierItem() const;
 
 		static Tier* WOOD;
 		static Tier* STONE;
@@ -47,10 +48,10 @@ public:
 
 	/* fields */
 	char filler[200];
-	
+
 	/* list */
 	static Item* mItems[4096];
-	static Item* mCreativeList[12];
+	static std::vector<ItemInstance> mCreativeList;
 	static Random* mRandom;
 
 	/* vtable */
@@ -95,10 +96,10 @@ public:
 	virtual void dispense(BlockSource&, Container&, int, const Vec3&, signed char);
 	virtual void useTimeDepleted(ItemInstance*, Level*, Player*);
 	virtual void releaseUsing(ItemInstance*, Player*, int);
-	virtual float getDestroySpeed(ItemInstance*, Block*);
+	virtual float getDestroySpeed(ItemInstance*, const Block*);
 	virtual void hurtEnemy(ItemInstance*, Mob*, Mob*);
 	virtual void interactEnemy(ItemInstance*, Mob*, Player*);
-	virtual void mineBlock(ItemInstance*, BlockID, int, int, int, Mob*);
+	virtual void mineBlock(ItemInstance*, BlockID, int, int, int, Entity*);
 	virtual const std::string buildDescriptionName(const ItemInstance&) const;
 	virtual const std::string buildEffectDescriptionName(const ItemInstance&) const;
 	virtual void readUserData(ItemInstance*, IDataInput&) const;
@@ -111,12 +112,13 @@ public:
 	virtual const std::string& getInteractText(const Player&) const;
 	virtual int getAnimationFrameFor(Mob&) const;
 	virtual bool isEmissive(int) const;
-	virtual TextureUVCoordinateSet& getIcon(int, int, bool) const;
+	virtual const TextureUVCoordinateSet& getIcon(int, int, bool) const;
 	virtual int getIconYOffset() const;
 	virtual bool isMirroredArt() const;
 
 	void init(Json::Value&);
 
+	/* static function */
 	static TextureUVCoordinateSet getTextureUVCoordinateSet(const std::string&, int);
 	static void initClientData();
 	static void initServerData(ResourcePackManager&);

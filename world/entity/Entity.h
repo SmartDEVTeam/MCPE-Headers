@@ -26,8 +26,9 @@ class SynchedEntityData;
 class EntityDamageSource;
 class EntityDefinitionGroup;
 class EntityIdentifier;
+class VariantParameterList;
 #include "../material/Material.h"
-\#include "../level/dimension/dimensionId.h"
+#include "../level/dimension/dimensionId.h"
 #include "../phys/AABB.h"
 #include "../phys/Vec3.h"
 #include "../phys/Vec2.h"
@@ -40,6 +41,8 @@ public:
 	Entity(BlockSource&, const std::string&);
 	Entity(EntityDefinitionGroup&, const EntityIdentifier&);
 
+	virtual void reloadHardcoded(Entity::InitializationMethod, const VariantParameterList&);
+	virtual void reloadHardcodedClient(Entity::InitializationMethod, const VariantParameterList&);
 	virtual ~Entity();
 	virtual void reset();
 	virtual void getOwnerEntityType();

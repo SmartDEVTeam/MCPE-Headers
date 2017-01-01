@@ -7,7 +7,7 @@ class AuxDataBlockItem : public BlockItem {
 	Block* blockPtr;
 
 public:
-	AuxDataBlockItem(const std::string&, int, Block*);
+	AuxDataBlockItem(const std::string&, int, Block const*);
 
 	virtual ~AuxDataBlockItem();
 	virtual int getLevelDataForAuxValue(int) const;
