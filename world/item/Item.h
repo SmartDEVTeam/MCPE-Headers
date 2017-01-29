@@ -8,9 +8,8 @@
 #include "../../CommonTypes.h"
 #include "../../UseAnimation.h"
 #include "../level/block/BlockShape.h"
-
 class TextureUVCoordinateSet;
-struct SeedItemComponent;
+class SeedItemComponent;
 class FoodItemComponent;
 class CameraItemComponent;
 class Block;
@@ -30,9 +29,12 @@ class Random;
 class ResourcePackManager;
 namespace Json { class Value; };
 
-class Item {
+// Size: 104
+class Item
+{
 public:
-	class Tier {
+	class Tier
+	{
 	public:
 		ItemInstance* getTierItem() const;
 
@@ -47,7 +49,30 @@ public:
 	Item(const std::string&, short);
 
 	/* fields */
-	char filler[200];
+	uint8_t _maxStackSize; // 4
+	std::string atlas; // 8
+	int frameCount; // 12
+	short idk; // 16
+	short itemId; // 18
+	std::string descriptionName; // 20
+	std::string descriptionId; // 24
+	bool mirroredArt; //28
+	short maxDamage; // 30
+	bool foil; // 32
+	bool handEquipped; // 33
+	bool stackedByData; // 34
+	int useDuration; // 36
+	short filler1; // 40
+	unsigned char blockId; // 42
+	int useAnimation; // 43
+	CreativeItemCategory creativeCategory; // 44
+	int filler2; // 48
+	void* colorFormat; // 52
+	TextureUVCoordinateSet& icon; // 56
+	int filler3[9]; // 60
+	std::unique_ptr <FoodItemComponent> _foodDetails; // 96
+	std::unique_ptr <SeedItemComponent> _seedDetails; // 100
+	std::unique_ptr <CameraItemComponent> _cameraDetails; // 104
 
 	/* list */
 	static Item* mItems[4096];
@@ -58,23 +83,23 @@ public:
 	virtual ~Item();
 	virtual Item* setIcon(const std::string&, int);
 	virtual Item* setIcon(const TextureUVCoordinateSet&);
-	virtual void setMaxStackSize(unsigned char);
-	virtual void setCategory(CreativeItemCategory);
-	virtual void setStackedByData(bool);
-	virtual void setMaxDamage(int);
-	virtual void setHandEquipped();
-	virtual void setUseAnimation(UseAnimation);
-	virtual void setMaxUseDuration(int);
-	virtual void setRequiresWorldBuilder(bool);
-	virtual void setExplodable(bool);
-	virtual void setIsGlint(bool);
-	virtual void setShouldDespawn(bool);
+	virtual Item* setMaxStackSize(unsigned char);
+	virtual Item* setCategory(CreativeItemCategory);
+	virtual Item* setStackedByData(bool);
+	virtual Item* setMaxDamage(int);
+	virtual Item* setHandEquipped();
+	virtual Item* setUseAnimation(UseAnimation);
+	virtual Item* setMaxUseDuration(int);
+	virtual Item* setRequiresWorldBuilder(bool);
+	virtual Item* setExplodable(bool);
+	virtual Item* setIsGlint(bool);
+	virtual Item* setShouldDespawn(bool);
 	virtual BlockShape getBlockShape() const;
 	virtual bool canBeDepleted();
 	virtual bool canDestroySpecial(const Block*) const;
 	virtual int getLevelDataForAuxValue(int) const;
 	virtual bool isStackedByData() const;
-	virtual int getMaxDamage();
+	virtual short getMaxDamage();
 	virtual int getAttackDamage();
 	virtual bool isHandEquipped() const;
 	virtual bool isArmor() const;
@@ -84,39 +109,39 @@ public:
 	virtual bool canDestroyInCreative() const;
 	virtual bool isLiquidClipItem(int) const;
 	virtual bool requiresInteract() const;
-	virtual const std::string& appendFormattedHovertext(const ItemInstance&, Level&, std::string&, bool) const;
+	virtual std::string appendFormattedHovertext(const ItemInstance&, Level&, std::string&, bool) const;
 	virtual bool isValidRepairItem(const ItemInstance&, const ItemInstance&);
 	virtual int getEnchantSlot() const;
 	virtual int getEnchantValue() const;
 	virtual bool isComplex() const;
+	virtual bool isValidAuxValue(int) const;
+    virtual int getDamageChance(int) const;
 	virtual int uniqueAuxValues() const;
 	virtual Color getColor(const ItemInstance&) const;
 	virtual bool use(ItemInstance&, Player&);
 	virtual bool useOn(ItemInstance&, Entity&, int, int, int, signed char, float, float, float);
 	virtual void dispense(BlockSource&, Container&, int, const Vec3&, signed char);
-	virtual void useTimeDepleted(ItemInstance*, Level*, Player*);
-	virtual void releaseUsing(ItemInstance*, Player*, int);
+	virtual FoodItemComponent useTimeDepleted(ItemInstance*, Level*, Player*);
+	virtual CameraItemComponent releaseUsing(ItemInstance*, Player*, int);
 	virtual float getDestroySpeed(ItemInstance*, const Block*);
 	virtual void hurtEnemy(ItemInstance*, Mob*, Mob*);
-	virtual void interactEnemy(ItemInstance*, Mob*, Player*);
-	virtual void mineBlock(ItemInstance*, BlockID, int, int, int, Entity*);
-	virtual const std::string buildDescriptionName(const ItemInstance&) const;
-	virtual const std::string buildEffectDescriptionName(const ItemInstance&) const;
+	virtual CameraItemComponent interactEnemy(ItemInstance*, Mob*, Player*);
+	virtual bool mineBlock(ItemInstance*, BlockID, int, int, int, Entity*);
+	virtual std::string buildDescriptionName(const ItemInstance&) const;
+	virtual std::string buildEffectDescriptionName(const ItemInstance&) const;
 	virtual void readUserData(ItemInstance*, IDataInput&) const;
 	virtual void writeUserData(const ItemInstance*, IDataOutput&) const;
-	virtual int getMaxStackSize(const ItemInstance*);
+	virtual unsigned char getMaxStackSize(const ItemInstance*);
 	virtual void inventoryTick(ItemInstance&, Level&, Entity&, int, bool);
-	virtual void onCraftedBy(ItemInstance&, Level&, Player&);
+	virtual bool onCraftedBy(ItemInstance&, Level&, Player&);
 	virtual int getCooldownType() const;
 	virtual int getCooldownTime() const;
-	virtual const std::string& getInteractText(const Player&) const;
+	virtual std::string getInteractText(const Player&) const;
 	virtual int getAnimationFrameFor(Mob&) const;
 	virtual bool isEmissive(int) const;
 	virtual const TextureUVCoordinateSet& getIcon(int, int, bool) const;
 	virtual int getIconYOffset() const;
 	virtual bool isMirroredArt() const;
-
-	void init(Json::Value&);
 
 	/* static function */
 	static TextureUVCoordinateSet getTextureUVCoordinateSet(const std::string&, int);
@@ -126,7 +151,7 @@ public:
 	static void initServer(Json::Value&);
 	static void addBlockItems();
 	static void initCreativeItems();
-	static void addCreativeItem(Block*, short);
+	static void addCreativeItem(const Block*, short);
 	static void addCreativeItem(Item*, short);
 	static void addCreativeItem(const ItemInstance&);
 	static void addCreativeItem(short, short);
@@ -270,5 +295,5 @@ public:
 	static Item* mPoisonous_potato; // 394
 	static Item* mEmptyMap; // 395
 	static Item* mGoldenCarrot; // 396
-
 };
+

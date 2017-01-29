@@ -19,15 +19,22 @@ class ChangeDimensionPacket;
 class ExplodeComponent;
 class Dimension;
 class Random;
+class Entity;
 class EntityLocation;
-enum class EntityType;
-class ENtityRenderId;
-class SynchedEntityData;
-class EntityDamageSource;
+class PalleteColor;
+class EntityUniqueID;
 class EntityDefinitionGroup;
-class EntityIdentifier;
+class EntityDefinitionIdentifier;
 class VariantParameterList;
+class SetEntityDataPacket;
+class LevelSoundEvent;
+class Brightness;
+class Mob;
 #include "../material/Material.h"
+#include "EntityType.h"
+#include "EntityRendererId.h"
+#include "SynchedEntityData.h"
+#include "EntityDamageSource.h"
 #include "../level/dimension/dimensionId.h"
 #include "../phys/AABB.h"
 #include "../phys/Vec3.h"
@@ -35,27 +42,41 @@ class VariantParameterList;
 #include "../../util/Color.h"
 #include "../../CommonTypes.h"
 
-class Entity {
+typedef std::vector<Entity*> EntityList;
+
+class Entity
+{
 public:
+	class InitializationMethod
+	{
+	};
+
 	Entity(Level&);
 	Entity(BlockSource&, const std::string&);
-	Entity(EntityDefinitionGroup&, const EntityIdentifier&);
-
-	virtual void reloadHardcoded(Entity::InitializationMethod, const VariantParameterList&);
-	virtual void reloadHardcodedClient(Entity::InitializationMethod, const VariantParameterList&);
+	Entity(EntityDefinitionGroup, const EntityDefinitionIdentifier&);
+	
 	virtual ~Entity();
+	virtual void reloadHardcoded(InitializationMethod, const VariantParameterList&);
+	virtual void reloadHardcodedClient(InitializationMethod, const VariantParameterList&);
+	virtual void initializeComponents(InitializationMethod, const VariantParameterList&);
+	virtual void reloadComponents(InitializationMethod, const VariantParameterList&);
+	virtual bool hasComponent(const std::string&) const;
+	virtual bool hasInventory() const;
+	virtual void getInventory();
 	virtual void reset();
-	virtual void getOwnerEntityType();
+	virtual int getOwnerEntityType();
 	virtual void remove();
-	virtual void setPos(const Vec3& pos);
+	virtual void setPos(const Vec3&);
 	virtual Vec3& getPos() const;
 	virtual Vec3& getPosOld() const;
-	virtual Vec3&* getPosExtrapolated(float) const;
+	virtual Vec3& getPosExtrapolated(float) const;
 	virtual Vec3& getVelocity() const;
-	virtual void move(const Vec3& pos);
-	virtual void checkBlockCollisions();
+	virtual void setRot(const Vec2&);
+	virtual void move(const Vec3&);
 	virtual void checkBlockCollisions(const AABB&);
+	virtual void checkBlockCollisions();
 	virtual bool canFly();
+	virtual void moveRelative(float, float, float);
 	virtual void lerpTo(const Vec3&, const Vec2&, int);
 	virtual void lerpMotion(const Vec3&);
 	virtual void turn(const Vec2&, bool);
@@ -66,34 +87,32 @@ public:
 	virtual void rideTick();
 	virtual void positionRider(Entity&) const;
 	virtual float getRidingHeight();
-	virtual float getRideHeight() const;
 	virtual void startRiding(Entity&);
 	virtual void addRider(Entity&);
-	virtual void removeRider(Entity&);
+	virtual void flagRiderToRemove(Entity&);
 	virtual bool intersects(const Vec3&, const Vec3&);
 	virtual bool isFree(const Vec3&, float);
 	virtual bool isFree(const Vec3&);
 	virtual bool isInWall() const;
-	virtual bool isInvisible();
+	virtual bool isInvisible() const;
 	virtual bool canShowNameTag();
+	virtual bool canExistInPeaceful() const;
 	virtual void setNameTagVisible(bool);
-	virtual const std::string& getNameTag() const;
+	virtual std::string getNameTag() const;
+	virtual std::string getFormattedNameTag() const;
 	virtual void setNameTag(const std::string&);
 	virtual bool isInWater() const;
 	virtual bool isInWaterOrRain();
 	virtual bool isInLava();
-	virtual bool isBaby() const;
 	virtual bool isUnderLiquid(MaterialType) const;
 	virtual void makeStuckInWeb();
 	virtual float getHeadHeight() const;
+	virtual float getCameraOffset() const;
 	virtual float getShadowHeightOffs();
 	virtual float getShadowRadius() const;
 	virtual bool isSkyLit(float);
-	virtual float getBrightness(float);
+	virtual Brightness getBrightness(float) const;
 	virtual bool interactPreventDefault();
-	virtual void interactWithPlayer(Player&);
-	virtual bool canInteractWith(Player&);
-	virtual std::string getInteractText(Player&);
 	virtual void playerTouch(Player&);
 	virtual void push(Entity&, bool);
 	virtual void push(const Vec3&);
@@ -101,22 +120,33 @@ public:
 	virtual bool isSilent();
 	virtual bool isPickable();
 	virtual bool isPushable() const;
+	virtual bool isPushableByPiston() const;
 	virtual bool isShootable();
 	virtual bool isSneaking() const;
 	virtual bool isAlive() const;
 	virtual bool isOnFire() const;
 	virtual bool isCreativeModeAllowed();
 	virtual bool isSurfaceMob() const;
-	virtual void hurt(const EntityDamageSource&, int);
+	virtual void setTarget(Entity*);
+	virtual void setOwner(EntityUniqueID);
+	virtual void setSitting(bool);
+	virtual void onTame();
+	virtual void onFailedTame();
+	virtual void onMate(Mob&);
+	virtual bool shouldRender() const;
+	virtual bool isInvulnerableTo(const EntityDamageSource&) const;
 	virtual void animateHurt();
 	virtual void doFireHurt(int);
 	virtual void onLightningHit();
 	virtual void onBounceStarted(const BlockPos&, const FullBlock&);
-	virtual void handleEntityEvent(EntityEvent);
+	virtual void feed(int);
+	virtual void handleEntityEvent(EntityEvent, int);
 	virtual int getPickRadius();
 	virtual void spawnAtLocation(int, int);
 	virtual void spawnAtLocation(int, int, float);
+	virtual void spawnAtLocation(FullBlock, int, float);
 	virtual void spawnAtLocation(const ItemInstance&, float);
+	virtual bool killed(Entity*);
 	virtual void awardKillScore(Entity&, int);
 	virtual void setEquippedSlot(ArmorSlot, int, int);
 	virtual void setEquippedSlot(ArmorSlot, const ItemInstance&);
@@ -124,9 +154,10 @@ public:
 	virtual void saveWithoutId(CompoundTag&);
 	virtual void load(const CompoundTag&);
 	virtual void loadLinks(const CompoundTag&, std::vector<EntityLink, std::allocator<EntityLink>>&);
-	virtual EntityType getEntityTypeId() const = 0;
+	virtual int getEntityTypeId() const = 0;
+	virtual bool acceptClientsideEntityData(Player&, const SetEntityDataPacket&);
 	virtual void queryEntityRenderer();
-	virtual long getSourceUniqueID();
+	virtual long getSourceUniqueID() const;
 	virtual void setOnFire(int);
 	virtual AABB getHandleWaterAABB() const;
 	virtual void handleInsidePortal(const BlockPos&);
@@ -134,28 +165,38 @@ public:
 	virtual int getPortalWaitTime() const;
 	virtual DimensionId getDimensionId() const;
 	virtual void changeDimension(DimensionId);
-	virtual void changeDimension(ChangeDimensionPacket&);
+	virtual void changeDimension(const ChangeDimensionPacket&);
 	virtual Player* getControllingPlayer() const;
 	virtual void checkFallDamage(float, bool);
 	virtual void causeFallDamage(float);
-	virtual void playSound(const std::string&, float, float, EntityLocation);
+	virtual void playSynchronizedSound(LevelSoundEvent, const Vec3&, int, bool);
 	virtual void onSynchedDataUpdate(int);
 	virtual bool canAddRider(Entity&) const;
 	virtual float getEyeHeight() const;
 	virtual void sendMotionPacketIfNeeded();
-	virtual void stopRiding(bool);
+	virtual void stopRiding(bool, bool);
 	virtual void buildDebugInfo(std::string&) const;
 	virtual bool hasOutputSignal(signed char) const;
 	virtual int getOutputSignal() const;
 	virtual std::string getDebugText(std::vector<std::string, std::allocator<std::string>>&);
+	virtual void startSeenByPlayer(Player&);
+	virtual void stopSeenByPlayer(Player&);
+	virtual float getMapDecorationRotation();
+	virtual float getRiderDecorationRotation(Player&);
+	virtual float getYHeadRot() const;
+	virtual bool isWorldBuilder();
+	virtual bool isCreative() const;
+	virtual void add(ItemInstance&);
+	virtual void drop(const ItemInstance&, bool);
+	virtual bool canDestroyBlock(const Block&) const;
+	virtual void setAuxValue(int);
 	virtual void setSize(float, float);
 	virtual void setPos(const EntityPos&);
 	virtual bool outOfWorld();
 	virtual void markHurt();
-	virtual void burn(int);
 	virtual void lavaHurt();
-	virtual void readAdditionalSaveData(const CompoundTag*) = 0;
-	virtual void addAdditionalSaveData(CompoundTag*) = 0;
+	virtual void readAdditionalSaveData(const CompoundTag&);
+	virtual void addAdditionalSaveData(CompoundTag&);
 	virtual void _playStepSound(const BlockPos&, int);
 	virtual void checkInsideBlocks(float);
 	virtual void pushOutOfBlocks(const Vec3&);
@@ -163,10 +204,12 @@ public:
 	virtual void doWaterSplashEffect();
 	virtual void updateInsideBlock();
 	virtual void onBlockCollision(int);
-
+	virtual void* getLootTable() const;
+	virtual void* getDefaultLootTable() const;
+	virtual void _removeRider(Entity&, bool);
+	
 	void _exitRide(const Entity&, float);
 	void _findRider(Entity&) const;
-	void _init();
 	void _manageRiders(BlockSource&);
 	void _sendLinkPacket(const EntityLink&) const;
 	void _tryPlaceAt(const Vec3&);
@@ -193,3 +236,4 @@ public:
 	Vec3& getRandomPointInAABB(Random&);
 	BlockSource& getRegion() const;
 };
+

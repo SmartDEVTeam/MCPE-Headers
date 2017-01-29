@@ -48,7 +48,7 @@ public:
 	
 	//virtual ~ArmorItem();
 	virtual bool isArmor() const;
-	virtual const std::string& appendFormattedHovertext(const ItemInstance&, Level&, std::string&, bool) const;
+	virtual std::string appendFormattedHovertext(const ItemInstance&, Level&, std::string&, bool) const;
 	virtual bool isValidRepairItem(const ItemInstance&, const ItemInstance&);
 	virtual int getEnchantSlot() const; 
 	virtual int getEnchantValue() const;
