@@ -5,6 +5,5 @@ enum class GeneratorType : int
 	OLD,
 	INFINITE,
 	FLAT,
-	NETHER,
-	END
+	NETHER
 };

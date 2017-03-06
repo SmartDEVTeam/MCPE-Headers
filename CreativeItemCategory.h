@@ -2,9 +2,9 @@
 
 enum class CreativeItemCategory : int
 {
-	BLOCKS = 1,
-	DECORATIONS,
-	TOOLS,
-	ITEMS
+	Blocks = 1,
+	Decorations,
+	Tools,
+	Items
 };
 

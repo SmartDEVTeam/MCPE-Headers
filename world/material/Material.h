@@ -1,10 +1,13 @@
 #pragma once
+
 #include <vector>
 #include <memory>
+
 #include "MaterialType.h"
 class Color;
 
-class Material {
+class Material
+{
 public:
 	MaterialType type; // 0
 	bool flammable; // 4
@@ -17,7 +20,8 @@ public:
 	bool solid; // 17
 	bool superHot; // 18
 	
-	enum Settings : int {
+	enum Settings : int
+	{
 		Default
 	};
 	
@@ -35,7 +39,10 @@ public:
 	float getTranslucency();
 	bool getBlocksMotion() const;
 	bool isSolid();
+	bool isSolidBlocking();
 	bool isSuperHot();
+	int getColor();
+	
 	
 	void _setReplaceable();
 	void _setMapColor(const Color&);
@@ -44,3 +51,4 @@ public:
 	static void _setupSurfaceMaterials();
 	static Material& getMaterial(MaterialType);
 };
+

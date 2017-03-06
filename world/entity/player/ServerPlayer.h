@@ -2,62 +2,38 @@
 
 #include "Player.h"
 #include "../../inventory/IContainerListener.h"
-class PacketSender;
-class NetworkIdentifier;
-class NetworkHandler;
-class SkinInfoData;
-namespace mce { class UUID; }
 
+// Size : 3480
 class ServerPlayer : public Player, public IContainerListener
 {
 public:
-	ServerPlayer(Level&, PacketSender&, NetworkHandler&, GameType, const NetworkIdentifier&, std::function<void ()(ServerPlayer&)>, std::unique_ptr<SkinInfoData, std::default_delete<SkinInfoData>>, mce::UUID, int);	
-	
+	//void **vtable;		// 3444
+	char filler1[20];		// 3448
+	int containerCount;		// 3468
+	char filler2[8];		// 3472
+
+public:
+	ServerPlayer(Level &, PacketSender &, bool, const RakNet::RakNetGUID &, std::function<void(ServerPlayer &)>);
 	virtual ~ServerPlayer();
 	virtual void normalTick();
-	virtual void push(const Vec3&);
-	virtual void changeDimension(DimensionId);
-	virtual void getControllingPlayer() const;
-	virtual void checkFallDamage(float, bool);
-	virtual void causeFallDamage(float);
-	virtual void knockback(Entity*, int, float, float, float);
+	virtual void knockback(Entity *, int, float, float);
 	virtual void aiStep();
 	virtual void hurtArmor(int);
-	virtual void onEffectAdded(MobEffectInstance&);
-	virtual void onEffectUpdated(const MobEffectInstance&);
-	virtual void onEffectRemoved(MobEffectInstance&);
-	virtual void destroyRegion();
-	virtual void changeDimensionWithCredits(DimensionId);
-	virtual void tickWorld(const Tick&);
-	virtual void checkMovementStats(const Vec3&);
-	virtual void setPermissions(CommandPermissionLevel);
-	virtual void openContainer(int, const BlockPos&);
-	virtual void openContainer(int, const EntityUniqueID&);
-	virtual void openFurnace(int, const BlockPos&);
-	virtual void openEnchanter(int, const BlockPos&);
-	virtual void openAnvil(int, const BlockPos&);
-	virtual void openBrewingStand(int, const BlockPos&);
-	virtual void openHopper(int, const BlockPos&);
-	virtual void openHopper(int, const EntityUniqueID&);
-	virtual void openDispenser(int, const BlockPos&, bool);
-	virtual void openBeacon(int, const BlockPos&);
-	virtual void openPortfolio();
-	virtual void openHorseInventory(int, const EntityUniqueID&);
-	virtual void openNpcInteractScreen(Entity&);
-	virtual void openInventory();
-	virtual void openStructureEditor(const BlockPos&);
-	virtual void displayLocalizableMessage(const std::string&, std::vector<std::string, const std::allocator<std::string>&, bool);
-	virtual void displayWhisperMessage(const std::string&, const std::string&);
+	virtual void onEffectAdded(const MobEffectInstance &);
+	virtual void onEffectUpdated(const MobEffectInstance &);
+	virtual void onEffectRemoved(const MobEffectInstance &);
+	virtual void tickWorld(const Tick &);
+	virtual void hasResource(int);
+	virtual void openContainer(ChestTileEntity *);
+	virtual void openFurnace(FurnaceTileEntity *);
+	virtual void displayChatMessage(const std::string &, const std::string &);
+	virtual void displayClientMessage(const std::string &);
+	virtual void displayLocalizableMessage(const std::string &, const std::vector<std::string> &);
 	virtual void stopSleepInBed(bool, bool);
-	virtual void setPlayerGameType(GameType);
-	virtual void setContainerData(IContainerManager&, int, int);
-	virtual void slotChanged(IContainerManager&, int, const ItemInstance&, bool);
-	virtual void refreshContainer(IContainerManager&, std::vector<ItemInstance, const std::allocator<ItemInstance>&);
-	virtual void deleteContainerManager();
-	virtual bool isPositionRelevant(DimensionId, const BlockPos&);
-	virtual bool isEntityRelevant(const Entity&);
-	virtual void onSuspension();
-	
+	virtual void closeContainer();
+	virtual void setContainerData(BaseContainerMenu *, int, int);
+	virtual void slotChanged(BaseContainerMenu *, int, const ItemInstance &, bool);
+	virtual void refreshContainer(BaseContainerMenu *, const std::vector<ItemInstance> &);
 	void disconnect();
 	void doCloseContainer();
 	void nextContainerCounter();

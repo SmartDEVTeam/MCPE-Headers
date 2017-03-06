@@ -1,13 +1,18 @@
 #pragma once
 
 class ChunkPos;
-class Vec3;
 
-class BlockPos
+struct BlockPos
 {
 	int x, y, z;
-
-	BlockPos(const ChunkPos &pos, int y);
-	BlockPos(const Vec3 &pos);
-	BlockPos(float x, float y, float z);
+	
+	BlockPos(float, float, float);
+	BlockPos(const Vec3&);
+	BlockPos(const ChunkPos&, int);
+	
+	std::string toString() const;
+	void center() const;
+	void neighbor(signed char) const;
+	void relative(signed char, int) const;
 };
+

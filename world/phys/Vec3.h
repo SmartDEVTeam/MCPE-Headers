@@ -1,36 +1,45 @@
 #pragma once
 
-#include <cmath>
+#include "Vec2.h"
 
-struct BlockPos;
+class BlockPos;
+class Pos;
 
-struct Vec3 {
-	float x, y, z;
+class Vec3 {
+public:
+    float x, y, z;
 
-	static const Vec3 ZERO;
-	static const Vec3 ONE;
+    Vec3() { x = y = z = 0.0 / 0.0; }
+    Vec3(float x, float y, float z) : x(x), y(y), z(z) { }
+    Vec3(BlockPos const&);
+    Vec3(Pos const&);
 
-	static const Vec3 UNIT_X, UNIT_Y, UNIT_Z;
-	static const Vec3 NEG_UNIT_X, NEG_UNIT_Y, NEG_UNIT_Z;
+    bool isNan() const;
 
-	Vec3(float _x, float _y, float _z) : x(_x), y(_y), z(_z) {}
-	Vec3(const BlockPos&);
+    Vec2 xz() const;
 
-	float lengthSquared() const;
-	float length() const;
+    float minComponent() const;
+    float maxComponent() const;
 
-	void normalize();
-	void setLength(float newLength);
+    std::string toString() const;
 
-	Vec3 operator+(Vec3 const& other) const;
-	void operator+=(Vec3 const& other);
-	Vec3 operator-(Vec3 const& other) const;
-	void operator-=(Vec3 const& other);
+    static Vec3 clamp(Vec3 const&, Vec3 const&, Vec3 const&);
+    static Vec3 clampAlongNormal(Vec3 const&, Vec3 const&, Vec3 const&, Vec3 const&, Vec3&);
 
-	Vec3 operator*(float factor) const;
-	void operator*=(float factor);
-	Vec3 operator/(float factor) const;
-	void operator/=(float factor);
+    static Vec3 directionFromRotation(Vec2 const&);
+    static Vec3 directionFromRotation(float, float);
+    static Vec3 rotationFromDirection(Vec3 const&);
 
-	Vec3 operator-() const;
+    static Vec3 ZERO;
+    static Vec3 ONE;
+    static Vec3 UNIT_X;
+    static Vec3 NEG_UNIT_X;
+    static Vec3 UNIT_Y;
+    static Vec3 NEG_UNIT_Y;
+    static Vec3 UNIT_Z;
+    static Vec3 NEG_UNIT_Z;
+    static Vec3 MAX;
+    static Vec3 MIN;
+
 };
+

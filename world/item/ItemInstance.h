@@ -10,6 +10,7 @@ class ItemEnchants;
 class Mob;
 class Player;
 class Level;
+class Entity;
 
 class ItemInstance {
 public:

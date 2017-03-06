@@ -5,11 +5,11 @@
 #include <vector>
 
 #include "../../CreativeItemCategory.h"
-#include "../../CommonTypes.h"
+#include "../level/block/BlockID.h"
 #include "../../UseAnimation.h"
 #include "../level/block/BlockShape.h"
 class TextureUVCoordinateSet;
-class SeedItemComponent;
+struct SeedItemComponent;
 class FoodItemComponent;
 class CameraItemComponent;
 class Block;
@@ -54,16 +54,16 @@ public:
 	int frameCount; // 12
 	short idk; // 16
 	short itemId; // 18
-	std::string descriptionName; // 20
-	std::string descriptionId; // 24
+	std::string name; // 20
+	std::string simpleName; // 24
 	bool mirroredArt; //28
 	short maxDamage; // 30
 	bool foil; // 32
 	bool handEquipped; // 33
 	bool stackedByData; // 34
 	int useDuration; // 36
-	short filler1; // 40
-	unsigned char blockId; // 42
+	char filler1[2]; // 40
+	char blockId; // 42
 	int useAnimation; // 43
 	CreativeItemCategory creativeCategory; // 44
 	int filler2; // 48
@@ -99,7 +99,7 @@ public:
 	virtual bool canDestroySpecial(const Block*) const;
 	virtual int getLevelDataForAuxValue(int) const;
 	virtual bool isStackedByData() const;
-	virtual short getMaxDamage();
+	virtual int getMaxDamage();
 	virtual int getAttackDamage();
 	virtual bool isHandEquipped() const;
 	virtual bool isArmor() const;
@@ -127,16 +127,16 @@ public:
 	virtual void hurtEnemy(ItemInstance*, Mob*, Mob*);
 	virtual CameraItemComponent interactEnemy(ItemInstance*, Mob*, Player*);
 	virtual bool mineBlock(ItemInstance*, BlockID, int, int, int, Entity*);
-	virtual std::string buildDescriptionName(const ItemInstance&) const;
-	virtual std::string buildEffectDescriptionName(const ItemInstance&) const;
+	virtual const std::string buildDescriptionName(const ItemInstance&) const;
+	virtual const std::string buildEffectDescriptionName(const ItemInstance&) const;
 	virtual void readUserData(ItemInstance*, IDataInput&) const;
 	virtual void writeUserData(const ItemInstance*, IDataOutput&) const;
-	virtual unsigned char getMaxStackSize(const ItemInstance*);
+	virtual int getMaxStackSize(const ItemInstance*);
 	virtual void inventoryTick(ItemInstance&, Level&, Entity&, int, bool);
 	virtual bool onCraftedBy(ItemInstance&, Level&, Player&);
 	virtual int getCooldownType() const;
 	virtual int getCooldownTime() const;
-	virtual std::string getInteractText(const Player&) const;
+	virtual const std::string& getInteractText(const Player&) const;
 	virtual int getAnimationFrameFor(Mob&) const;
 	virtual bool isEmissive(int) const;
 	virtual const TextureUVCoordinateSet& getIcon(int, int, bool) const;
@@ -295,5 +295,5 @@ public:
 	static Item* mPoisonous_potato; // 394
 	static Item* mEmptyMap; // 395
 	static Item* mGoldenCarrot; // 396
-};
 
+};

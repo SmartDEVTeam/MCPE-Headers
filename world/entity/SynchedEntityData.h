@@ -1,13 +1,13 @@
 #pragma once
 
-// Size : 16
-class SynchedEntityData
-{
-public:
-	char filler1[16];	// 0
+enum class DataItemType : int {
+	STRING = 4,
+	ITEMINSTANCE,
+	
+};
 
-public:
-	SynchedEntityData();
-	SynchedEntityData(SynchedEntityData &&);
-	~SynchedEntityData();
+
+struct SynchedEntityData {
+	char filler[16];
+
 };
