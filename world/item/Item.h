@@ -49,27 +49,30 @@ public:
 	Item(const std::string&, short);
 
 	/* fields */
-	uint8_t _maxStackSize; // 4
-	std::string atlas; // 8
+	uint8_t maxStackSize; // 4
+	std::string iconAtlasName; // 8
 	int frameCount; // 12
-	short idk; // 16
+	short filler1; // 16
 	short itemId; // 18
-	std::string name; // 20
-	std::string simpleName; // 24
+	std::string descriptionId; // 20 : item...name
+	std::string descriptionName; // 24
 	bool mirroredArt; //28
 	short maxDamage; // 30
 	bool foil; // 32
 	bool handEquipped; // 33
 	bool stackedByData; // 34
-	int useDuration; // 36
-	char filler1[2]; // 40
-	char blockId; // 42
-	int useAnimation; // 43
+	int maxUseDuration; // 36
+	bool explodable; // 40
+	bool shouldDespawn; // 41
+	BlockID blockId; // 42
+	UseAnimation useAnimation; // 43
 	CreativeItemCategory creativeCategory; // 44
 	int filler2; // 48
 	void* colorFormat; // 52
 	TextureUVCoordinateSet& icon; // 56
-	int filler3[9]; // 60
+	TextureAtlasItem* customAtlasIcon; // 60
+	int filler3[7]; // 64
+	float vrHandControllerScale;// 92
 	std::unique_ptr <FoodItemComponent> _foodDetails; // 96
 	std::unique_ptr <SeedItemComponent> _seedDetails; // 100
 	std::unique_ptr <CameraItemComponent> _cameraDetails; // 104
@@ -99,7 +102,7 @@ public:
 	virtual bool canDestroySpecial(const Block*) const;
 	virtual int getLevelDataForAuxValue(int) const;
 	virtual bool isStackedByData() const;
-	virtual int getMaxDamage();
+	virtual short getMaxDamage();
 	virtual int getAttackDamage();
 	virtual bool isHandEquipped() const;
 	virtual bool isArmor() const;
@@ -127,8 +130,8 @@ public:
 	virtual void hurtEnemy(ItemInstance*, Mob*, Mob*);
 	virtual CameraItemComponent interactEnemy(ItemInstance*, Mob*, Player*);
 	virtual bool mineBlock(ItemInstance*, BlockID, int, int, int, Entity*);
-	virtual const std::string buildDescriptionName(const ItemInstance&) const;
-	virtual const std::string buildEffectDescriptionName(const ItemInstance&) const;
+	virtual std::string buildDescriptionName(const ItemInstance&) const;
+	virtual std::string buildEffectDescriptionName(const ItemInstance&) const;
 	virtual void readUserData(ItemInstance*, IDataInput&) const;
 	virtual void writeUserData(const ItemInstance*, IDataOutput&) const;
 	virtual int getMaxStackSize(const ItemInstance*);
@@ -136,7 +139,7 @@ public:
 	virtual bool onCraftedBy(ItemInstance&, Level&, Player&);
 	virtual int getCooldownType() const;
 	virtual int getCooldownTime() const;
-	virtual const std::string& getInteractText(const Player&) const;
+	virtual std::string getInteractText(const Player&) const;
 	virtual int getAnimationFrameFor(Mob&) const;
 	virtual bool isEmissive(int) const;
 	virtual const TextureUVCoordinateSet& getIcon(int, int, bool) const;

@@ -150,10 +150,10 @@ public:
 	virtual bool shouldRenderFace(BlockSource&, BlockPos const&, signed char, AABB const&) const;
 	virtual int getIconYOffset() const;
 	virtual std::string buildDescriptionName(unsigned char) const;
-	virtual int getColor(int) const;
-	virtual int getColor(BlockSource&, BlockPos const&) const;
-	virtual int getColor(BlockSource&, BlockPos const&, unsigned char) const;
-	virtual int getColorForParticle(BlockSource&, BlockPos const&, int) const;
+	virtual unsigned int getColor(int) const;
+	virtual unsigned int getColor(BlockSource&, BlockPos const&) const;
+	virtual unsigned int getColor(BlockSource&, BlockPos const&, unsigned char) const;
+	virtual unsigned int getColorForParticle(BlockSource&, BlockPos const&, int) const;
 	virtual bool isSeasonTinted(BlockSource&, BlockPos const&) const;
 	virtual void onGraphicsModeChanged(bool, bool, bool);
 	virtual int getRenderLayer(BlockSource&, BlockPos const&) const;
