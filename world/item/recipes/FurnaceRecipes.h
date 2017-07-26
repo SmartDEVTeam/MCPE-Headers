@@ -1,22 +1,27 @@
 #pragma once
 
+#include <memory>
 class ItemInstance;
 
 class FurnaceRecipes
 {
+private:
+	void _init();
 public:
 	FurnaceRecipes();
 	
-	static FurnaceRecipes* mInstance;
-	static FurnaceRecipes* getInstance();
-	static void teardownFurnaceRecipes();
-	static void clearFurnaceRecipes();
-	static void _init();
-	
+	bool isFurnaceItem(const ItemInstance*) const;
+	ItemInstance getResult(const ItemInstance*) const;
 	void addFurnaceRecipe(int, const ItemInstance&);
 	void addFurnaceRecipeAuxData(short, short, const ItemInstance&);
 	void getResult(const ItemInstance*);
 	bool isFurnaceItem(const ItemInstance*);
-	void init();
-};
 
+	// static
+	static void init();
+	static void teardownFurnaceRecipes();
+	static FurnaceRecipes* getInstance();
+
+	// static fields
+	static std::unique_ptr<FurnaceRecipes> mInstance;
+};

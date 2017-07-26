@@ -1,6 +1,6 @@
 # MCPE-Headers
 
-These C++ headers are written to support MCPE 1.0.4.11
+These C++ headers are written to support MCPE 1.1.4.51
 
 We would appreciate if you give credits when using this headers.
 

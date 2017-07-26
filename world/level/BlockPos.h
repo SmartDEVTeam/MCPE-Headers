@@ -1,11 +1,14 @@
 #pragma once
 
 class ChunkPos;
+struct Vec3;
 
-struct BlockPos
+class BlockPos
 {
+public:
 	int x, y, z;
 	
+	BlockPos(int x, int y, int z) : x(x), y(y), z(z) {}
 	BlockPos(float, float, float);
 	BlockPos(const Vec3&);
 	BlockPos(const ChunkPos&, int);

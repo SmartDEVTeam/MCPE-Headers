@@ -5,7 +5,8 @@
 class BlockPos;
 class Pos;
 
-class Vec3 {
+class Vec3
+{
 public:
     float x, y, z;
 
@@ -15,20 +16,18 @@ public:
     Vec3(Pos const&);
 
     bool isNan() const;
-
     Vec2 xz() const;
-
     float minComponent() const;
     float maxComponent() const;
-
     std::string toString() const;
+	void* toJsonString() const;
 
-    static Vec3 clamp(Vec3 const&, Vec3 const&, Vec3 const&);
-    static Vec3 clampAlongNormal(Vec3 const&, Vec3 const&, Vec3 const&, Vec3 const&, Vec3&);
+    static Vec3 clamp(const Vec3&, const Vec3&, const Vec3&);
+    static Vec3 clampAlongNormal(const Vec3&, const Vec3&, const Vec3&, const Vec3&, Vec3&);
 
-    static Vec3 directionFromRotation(Vec2 const&);
+    static Vec3 directionFromRotation(const Vec2&);
     static Vec3 directionFromRotation(float, float);
-    static Vec3 rotationFromDirection(Vec3 const&);
+    static Vec3 rotationFromDirection(const Vec3&);
 
     static Vec3 ZERO;
     static Vec3 ONE;

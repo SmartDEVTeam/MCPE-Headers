@@ -1,14 +1,11 @@
 #pragma once
 
-#include <cstdint>
 #include "block/BlockID.h"
 
 class Block;
 
 class FullBlock {
-
 public:
-
     BlockID id;
     uint_fast8_t data;
 

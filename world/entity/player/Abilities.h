@@ -1,18 +1,31 @@
 #pragma once
 
-// Size : 5
+#include <string>
+
+class Ability;
+class CompoundTag;
+class PermissionsHandler;
+struct CommandPermissionLevel;
+
 class Abilities
 {
-public:
-	bool disableDamage;	// 0
-	bool flying;		// 1
-	bool allowFlying;	// 2
-	bool creativeMode;	// 3
-	bool allowEdit;		// 4
+private:
+	void* _registerAbilities();
+	void* _registerAbilities(const std::string&, const Ability&);
 
 public:
 	Abilities();
-	void addSaveData(void *);
+
+	void addSaveData(CompoundTag&);
+	void* getAbilities() const;
+	void* getAbility(const std::string&) const;
+	void* getAbility(const std::string&);
+	bool getBool(const std::string&) const;
+	PermissionsHandler getCommandPermissions() const;
+	float getFloat(const std::string&);
 	bool isFlying() const;
-	void loadSaveData(void *);
+	void loadSaveData(const CompoundTag&);
+	void setAbility(cosnt std::string&, bool);
+	void setAbility(cosnt std::string&, float);
+	void setCommandPermissions(CommandPermissionLevel);
 };

@@ -1,15 +1,21 @@
 #pragma once
 
 #include <string>
-#include <memory>
 #include <vector>
+#include <memory>
+#include <unordered_map>
 
-#include "../../CreativeItemCategory.h"
+#include "UseAnimation.h"
+#include "CreativeItemCategory.h"
 #include "../level/block/BlockID.h"
-#include "../../UseAnimation.h"
 #include "../level/block/BlockShape.h"
+#include "../level/BlockPos.h"
+#include "CooldownType.h"
+#include "../phys/Vec3.h"
+#include "../../util/Util.h"
+
 class TextureUVCoordinateSet;
-struct SeedItemComponent;
+class SeedItemComponent;
 class FoodItemComponent;
 class CameraItemComponent;
 class Block;
@@ -24,32 +30,21 @@ class Color;
 struct Vec3;
 struct IDataInput;
 struct IDataOutput;
-class Color;
 class Random;
 class ResourcePackManager;
+class TextureAtlasItem;
+class TextureAtlas;
 namespace Json { class Value; };
 
-// Size: 104
+// Size: 108
 class Item
 {
 public:
-	class Tier
-	{
-	public:
-		ItemInstance* getTierItem() const;
-
-		static Tier* WOOD;
-		static Tier* STONE;
-		static Tier* IRON;
-		static Tier* GOLD;
-		static Tier* DIAMOND;
-	};
-
 	/* copy constructor */
 	Item(const std::string&, short);
 
 	/* fields */
-	uint8_t maxStackSize; // 4
+	uint8_t _maxStackSize; // 4
 	std::string iconAtlasName; // 8
 	int frameCount; // 12
 	short filler1; // 16
@@ -58,28 +53,33 @@ public:
 	std::string descriptionName; // 24
 	bool mirroredArt; //28
 	short maxDamage; // 30
-	bool foil; // 32
+	bool glint; // 32
 	bool handEquipped; // 33
 	bool stackedByData; // 34
+	char filler2; // 35
 	int maxUseDuration; // 36
 	bool explodable; // 40
 	bool shouldDespawn; // 41
-	BlockID blockId; // 42
-	UseAnimation useAnimation; // 43
-	CreativeItemCategory creativeCategory; // 44
-	int filler2; // 48
+	bool allowOffHand; // 42
+	char filler3[2]; // 43
+	UseAnimation useAnimation; // 45
+	char filler4[2]; // 46
+	CreativeItemCategory creativeCategory; // 48
 	void* colorFormat; // 52
 	TextureUVCoordinateSet& icon; // 56
 	TextureAtlasItem* customAtlasIcon; // 60
-	int filler3[7]; // 64
-	float vrHandControllerScale;// 92
-	std::unique_ptr <FoodItemComponent> _foodDetails; // 96
-	std::unique_ptr <SeedItemComponent> _seedDetails; // 100
-	std::unique_ptr <CameraItemComponent> _cameraDetails; // 104
+	int filler5[2]; // 64
+	Vec3 vrHandControllerPositionAdjust; // 72
+	Vec3 vrHandControllerRotationAdjust; // 84
+	float vrHandControllerScale; // 96
+	FoodItemComponent* foodComponent; // 100
+	SeedItemComponent* seedComponent; // 104
+	CameraItemComponent* cameraComponent; // 108
 
 	/* list */
 	static Item* mItems[4096];
 	static std::vector<ItemInstance> mCreativeList;
+	static std::unordered_map<std::string, std::unique_ptr<Item>> mItemLookupMap;
 	static Random* mRandom;
 
 	/* vtable */
@@ -98,46 +98,47 @@ public:
 	virtual Item* setIsGlint(bool);
 	virtual Item* setShouldDespawn(bool);
 	virtual BlockShape getBlockShape() const;
-	virtual bool canBeDepleted();
-	virtual bool canDestroySpecial(const Block*) const;
+	virtual bool canBeDepleted() const;
+	virtual bool canDestroySpecial(const Block&) const;
 	virtual int getLevelDataForAuxValue(int) const;
 	virtual bool isStackedByData() const;
-	virtual short getMaxDamage();
-	virtual int getAttackDamage();
+	virtual int getMaxDamage() const;
+	virtual int getAttackDamage() const;
 	virtual bool isHandEquipped() const;
 	virtual bool isArmor() const;
 	virtual bool isDye() const;
-	virtual bool isGlint(const ItemInstance*) const;
+	virtual bool isGlint(const ItemInstance&) const;
 	virtual bool isThrowable() const;
 	virtual bool canDestroyInCreative() const;
+	virtual bool isDestructive(int) const;
 	virtual bool isLiquidClipItem(int) const;
 	virtual bool requiresInteract() const;
 	virtual std::string appendFormattedHovertext(const ItemInstance&, Level&, std::string&, bool) const;
-	virtual bool isValidRepairItem(const ItemInstance&, const ItemInstance&);
+	virtual bool isValidRepairItem(const ItemInstance&, const ItemInstance&) const;
 	virtual int getEnchantSlot() const;
 	virtual int getEnchantValue() const;
 	virtual bool isComplex() const;
 	virtual bool isValidAuxValue(int) const;
-    virtual int getDamageChance(int) const;
+	virtual int getDamageChance(int) const;
 	virtual int uniqueAuxValues() const;
 	virtual Color getColor(const ItemInstance&) const;
-	virtual bool use(ItemInstance&, Player&);
-	virtual bool useOn(ItemInstance&, Entity&, int, int, int, signed char, float, float, float);
-	virtual void dispense(BlockSource&, Container&, int, const Vec3&, signed char);
-	virtual FoodItemComponent useTimeDepleted(ItemInstance*, Level*, Player*);
-	virtual CameraItemComponent releaseUsing(ItemInstance*, Player*, int);
-	virtual float getDestroySpeed(ItemInstance*, const Block*);
-	virtual void hurtEnemy(ItemInstance*, Mob*, Mob*);
-	virtual CameraItemComponent interactEnemy(ItemInstance*, Mob*, Player*);
-	virtual bool mineBlock(ItemInstance*, BlockID, int, int, int, Entity*);
+	virtual bool isTintable() const;
+	virtual bool use(ItemInstance&, Player&) const;
+	virtual void dispense(BlockSource&, Container&, int, const Vec3&, signed char) const;
+	virtual bool useTimeDepleted(ItemInstance&, Level*, Player*) const;
+	virtual void releaseUsing(ItemInstance&, Player*, int) const;
+	virtual float getDestroySpeed(const ItemInstance&, const Block&) const;
+	virtual void hurtEnemy(ItemInstance&, Mob*, Mob*) const;
+	virtual void interactEnemy(ItemInstance&, Mob*, Player*) const;
+	virtual bool mineBlock(ItemInstance&, BlockID, int, int, int, Entity*) const;
 	virtual std::string buildDescriptionName(const ItemInstance&) const;
 	virtual std::string buildEffectDescriptionName(const ItemInstance&) const;
-	virtual void readUserData(ItemInstance*, IDataInput&) const;
-	virtual void writeUserData(const ItemInstance*, IDataOutput&) const;
-	virtual int getMaxStackSize(const ItemInstance*);
-	virtual void inventoryTick(ItemInstance&, Level&, Entity&, int, bool);
-	virtual bool onCraftedBy(ItemInstance&, Level&, Player&);
-	virtual int getCooldownType() const;
+	virtual void readUserData(ItemInstance&, IDataInput&) const;
+	virtual void writeUserData(const ItemInstance&, IDataOutput&) const;
+	virtual uint8_t getMaxStackSize(const ItemInstance&) const;
+	virtual void inventoryTick(ItemInstance&, Level&, Entity&, int, bool) const;
+	virtual bool onCraftedBy(ItemInstance&, Level&, Player&) const;
+	virtual CooldownType getCooldownType() const;
 	virtual int getCooldownTime() const;
 	virtual std::string getInteractText(const Player&) const;
 	virtual int getAnimationFrameFor(Mob&) const;
@@ -145,13 +146,27 @@ public:
 	virtual const TextureUVCoordinateSet& getIcon(int, int, bool) const;
 	virtual int getIconYOffset() const;
 	virtual bool isMirroredArt() const;
+	virtual void _checkUseOnPermissions(Entity&, ItemInstance&, const signed char&, const BlockPos&) const;
+	virtual void _calculatePlacePos(ItemInstance&, Entity&, signed char&, BlockPos&) const;
+	virtual bool _useOn(ItemInstance&, Entity&, BlockPos, signed char, float, float, float) const;
+
+	void setTextureAtlas(std::shared_ptr<TextureAtlas>);
+	void initServer(Json::Value&);
+	void initClient(Json::Value&, Json::Value&);
+	Item* setIsMirroredArt(bool);
+	void* getTextureItem(const std::string&);
+	void* lookupByName(const std::string&, bool);
+	void* _textMatch(const std::string&, const std::string&, bool);
+	void setAllowOffhand(bool);
+	bool allowOffhand() const;
+	float destroySpeedBonus(const ItemInstance&) const;
+	void updateCustomBlockEntityTag(BlockSource&, ItemInstance&, BlockPos&) const;
+	bool useOn(ItemInstance&, Entity&, int, int, int, signed char, float, float, float);
 
 	/* static function */
-	static TextureUVCoordinateSet getTextureUVCoordinateSet(const std::string&, int);
+	static TextureUVCoordinateSet* getTextureUVCoordinateSet(const std::string&, int);
 	static void initClientData();
 	static void initServerData(ResourcePackManager&);
-	static void initClient(Json::Value&, Json::Value&);
-	static void initServer(Json::Value&);
 	static void addBlockItems();
 	static void initCreativeItems();
 	static void addCreativeItem(const Block*, short);
@@ -159,6 +174,7 @@ public:
 	static void addCreativeItem(const ItemInstance&);
 	static void addCreativeItem(short, short);
 	static void registerItems();
+	static void teardownItems();
 
 	static Item* mShovel_iron; // 256
 	static Item* mPickaxe_iron; // 257
@@ -298,5 +314,17 @@ public:
 	static Item* mPoisonous_potato; // 394
 	static Item* mEmptyMap; // 395
 	static Item* mGoldenCarrot; // 396
-
 };
+
+template <typename ItemType, typename...Args>
+ItemType& registerItem(const std::string &name, int id, const Args&...rest)
+{
+	const std::string item_name = Util::toLower(name);
+	if (Item::mItemLookupMap.count(item_name) != 0)
+		return *(ItemType*)Item::mItems[id + 256];
+
+	ItemType* new_instance = new ItemType(name, id, rest...);
+	Item::mItems[id + 256] = new_instance;
+	Item::mItemLookupMap.emplace(item_name, std::unique_ptr<Item>((Item*) new_instance));
+	return *new_instance;
+}

@@ -1,7 +1,7 @@
 #pragma once
 
 #include <memory>
-#include "../../UseAnimation.h"
+#include "UseAnimation.h"
 
 class CompoundTag;
 class Item;
@@ -20,6 +20,13 @@ public:
     bool valid;
     Item* item;
     Block* block;
+	
+	static void* TAG_ENCHANTS;
+	static void* TAG_DISPLAY;
+	static void* MAX_STACK_SIZE;
+	static void* TAG_REPAIR_COST;
+	static void* TAG_DISPLAY_NAME;
+	static void* TAG_LORE;
 
 	ItemInstance();
 	ItemInstance(const Block*);
